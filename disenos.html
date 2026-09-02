@@ -57,11 +57,53 @@
     color:#5c584f;
   }
 
+  .categories{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-bottom:48px;
+  }
+  .cat-btn{
+    background:var(--black);
+    color:var(--bone);
+    border:none;
+    padding:12px 20px;
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    font-weight:500;
+    cursor:pointer;
+    clip-path:polygon(0 0, 96% 0, 100% 100%, 4% 100%);
+    transition:background 0.15s, color 0.15s;
+  }
+  .cat-btn:hover{background:#2a2824; color:var(--mustard);}
+  .cat-btn.active{
+    background:var(--mustard);
+    color:var(--black);
+    font-weight:700;
+  }
+
   .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
     gap:36px;
   }
+  .grid.is-empty{display:none;}
+  .empty{
+    display:none;
+    padding:48px 24px;
+    text-align:center;
+    background:var(--black);
+    color:var(--bone);
+    transform:rotate(-1deg);
+  }
+  .empty.visible{display:block;}
+  .empty p{
+    font-family:'Permanent Marker', cursive;
+    color:var(--mustard);
+    font-size:22px;
+    margin-bottom:8px;
+  }
+  .empty span{color:#c9c5ba; font-size:16px;}
   .card{
     background:var(--black);
     color:var(--bone);
@@ -72,6 +114,7 @@
   .card:nth-child(4n+2){transform:rotate(1.5deg);}
   .card:nth-child(4n+3){transform:rotate(-1deg);}
   .card:nth-child(4n){transform:rotate(2deg);}
+  .card.hidden{display:none;}
   .card .art{
     aspect-ratio:1;
     background:#0c0b0a;
@@ -131,35 +174,50 @@
     <p>Cada diseño sale en tiradas chicas. Cuando se van, se van.</p>
   </div>
 
-  <div class="grid">
-    <div class="card">
+  <div class="categories" role="tablist" aria-label="Categorías de diseños">
+    <button class="cat-btn active" type="button" data-category="todos" role="tab" aria-selected="true">Todos</button>
+    <button class="cat-btn" type="button" data-category="big-lebowski" role="tab" aria-selected="false">Big lebowski</button>
+    <button class="cat-btn" type="button" data-category="frases" role="tab" aria-selected="false">Frases</button>
+    <button class="cat-btn" type="button" data-category="lotr" role="tab" aria-selected="false">LOTR</button>
+    <button class="cat-btn" type="button" data-category="pelis-random" role="tab" aria-selected="false">Pelis random</button>
+    <button class="cat-btn" type="button" data-category="seinfeld" role="tab" aria-selected="false">Seinfeld</button>
+    <button class="cat-btn" type="button" data-category="succession" role="tab" aria-selected="false">Succession</button>
+  </div>
+
+  <div class="grid" id="grid">
+    <div class="card" data-category="frases">
       <div class="art">
         <img src="i_have_a_crush_on_you.png" alt="I have a crush on you">
       </div>
       <div class="name">I have a crush on you</div>
       <div class="price">$890</div>
     </div>
-    <div class="card">
+    <div class="card" data-category="pelis-random">
       <div class="art">
         <img src="soy%20bonito%20no%20Perfecto.png" alt="Soy bonito no perfecto">
       </div>
       <div class="name">Soy bonito no perfecto</div>
       <div class="price">$890</div>
     </div>
-    <div class="card">
+    <div class="card" data-category="frases">
       <div class="art">
         <img src="Agencia%20esapcial%20uruguaya.png" alt="Agencia Espacial Uruguaya">
       </div>
       <div class="name">Agencia Espacial Uruguaya</div>
       <div class="price">$890</div>
     </div>
-    <div class="card">
+    <div class="card" data-category="frases">
       <div class="art">
         <img src="IT_S%20NOT%20GONNA%20LICK%20ITSELF.png" alt="It's not gonna lick itself">
       </div>
       <div class="name">It's not gonna lick itself</div>
       <div class="price">$890</div>
     </div>
+  </div>
+
+  <div class="empty" id="empty" aria-live="polite">
+    <p>todavía no hay nada acá</p>
+    <span>Volvé pronto — o mirá otra categoría.</span>
   </div>
 </main>
 
@@ -176,6 +234,44 @@
     <li><a href="#">Envíos</a></li>
   </ul>
 </footer>
+
+<script>
+  const buttons = document.querySelectorAll('.cat-btn');
+  const cards = document.querySelectorAll('.card');
+  const grid = document.getElementById('grid');
+  const empty = document.getElementById('empty');
+
+  function filterCategory(category) {
+    let visible = 0;
+
+    cards.forEach(card => {
+      const show = category === 'todos' || card.dataset.category === category;
+      card.classList.toggle('hidden', !show);
+      if (show) visible++;
+    });
+
+    grid.classList.toggle('is-empty', visible === 0);
+    empty.classList.toggle('visible', visible === 0);
+
+    buttons.forEach(btn => {
+      const active = btn.dataset.category === category;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active);
+    });
+
+    history.replaceState(null, '', category === 'todos' ? 'disenos.html' : `disenos.html?cat=${category}`);
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => filterCategory(btn.dataset.category));
+  });
+
+  const params = new URLSearchParams(location.search);
+  const initial = params.get('cat');
+  if (initial && document.querySelector(`.cat-btn[data-category="${initial}"]`)) {
+    filterCategory(initial);
+  }
+</script>
 
 </body>
 </html>
