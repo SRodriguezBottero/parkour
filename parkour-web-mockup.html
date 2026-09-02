@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parkour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#121212;
+    --bone:#F3EFE6;
+    --mustard:#D8A73D;
+    --brick:#C1442E;
+    --line:#33312c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--black);
+    color:var(--bone);
+    font-family:'Space Grotesk', sans-serif;
+    overflow-x:hidden;
+  }
+  .display{font-family:'Archivo Black', sans-serif; text-transform:uppercase; line-height:0.9;}
+  .marker{font-family:'Permanent Marker', cursive;}
+
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:32px 5vw;
+  }
+  nav .logo{display:flex; align-items:center;}
+  nav .logo img{height:112px; width:auto; display:block; margin:-16px 0;}
+  nav ul{display:flex; gap:36px; list-style:none;}
+  nav a{color:var(--bone); text-decoration:none; font-size:17px;}
+  nav a:hover{color:var(--mustard);}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items:center;
+    padding:3vw 5vw 7vw;
+    gap:48px;
+  }
+  .hero-copy h1{
+    font-size:clamp(56px, 9.5vw, 128px);
+    letter-spacing:-2px;
+  }
+  .hero-copy h1 span{display:block;}
+  .hero-copy h1 .offset{
+    margin-left:12%;
+    color:var(--mustard);
+  }
+  .hero-copy p{
+    max-width:38ch;
+    margin-top:32px;
+    font-size:20px;
+    color:#c9c5ba;
+  }
+  .cta-row{margin-top:36px; display:flex; align-items:center; gap:20px;}
+  .btn{
+    background:var(--brick);
+    color:var(--bone);
+    border:none;
+    padding:18px 34px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:17px;
+    cursor:pointer;
+    clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
+  }
+  .btn:hover{background:#a83a26;}
+  .cta-row .marker{color:var(--mustard); font-size:24px; transform:rotate(-4deg);}
+
+  .hero-visual{
+    position:relative;
+    display:flex; justify-content:center; align-items:center;
+  }
+  .tee-card{
+    width:min(420px, 86%);
+    background:#1c1a17;
+    border:1px solid var(--line);
+    padding:28px;
+    transform:rotate(4deg);
+    box-shadow: 18px 18px 0 rgba(216,167,61,0.15);
+  }
+  .tee-card svg{width:100%; height:auto; display:block;}
+  .tag{
+    position:absolute;
+    top:-18px; left:-18px;
+    background:var(--mustard);
+    color:var(--black);
+    font-family:'Permanent Marker',cursive;
+    font-size:17px;
+    padding:10px 16px;
+    transform:rotate(-8deg);
+  }
+
+  /* DIAGONAL DIVIDER */
+  .divider{
+    height:110px;
+    background:var(--bone);
+    clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 100%);
+    margin-top:-2px;
+  }
+
+  /* DESIGNS STRIP */
+  .designs{
+    background:var(--bone);
+    color:var(--black);
+    padding:0 5vw 110px;
+  }
+  .designs h2{
+    font-size:clamp(40px,6vw,68px);
+    margin-bottom:10px;
+  }
+  .designs .sub{color:#5c584f; margin-bottom:52px; max-width:46ch; font-size:19px;}
+  .strip{
+    display:flex;
+    gap:28px;
+    overflow-x:auto;
+    padding-bottom:20px;
+  }
+  .card{
+    flex:0 0 300px;
+    background:var(--black);
+    color:var(--bone);
+    padding:20px 20px 26px;
+    position:relative;
+  }
+  .card:nth-child(odd){transform:rotate(-3deg);}
+  .card:nth-child(even){transform:rotate(2deg);}
+  .card .art{
+    aspect-ratio:1;
+    background:#0c0b0a;
+    overflow:hidden;
+  }
+  .card img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+  }
+  .card .name{
+    margin-top:14px;
+    font-weight:700;
+    font-size:17px;
+  }
+  .card .price{color:var(--mustard); font-size:16px; margin-top:4px;}
+
+  /* ABOUT */
+  .about{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    background:var(--black);
+  }
+  .about .text{
+    padding:110px 5vw;
+  }
+  .about .text .eyebrow-free{
+    font-family:'Permanent Marker',cursive;
+    color:var(--mustard);
+    font-size:24px;
+    transform:rotate(-3deg);
+    display:inline-block;
+    margin-bottom:18px;
+  }
+  .about h3{
+    font-size:clamp(36px,5vw,54px);
+    max-width:14ch;
+    margin-bottom:24px;
+  }
+  .about p{
+    max-width:42ch;
+    color:#c9c5ba;
+    line-height:1.6;
+    font-size:18px;
+  }
+  .about .visual{
+    position:relative;
+    background:
+      repeating-linear-gradient(-8deg, #1a1815, #1a1815 2px, transparent 2px, transparent 40px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .about .visual img{
+    width:min(340px, 70%);
+    height:auto;
+    display:block;
+    background:#e8e4dc;
+    padding:18px;
+    transform:rotate(-6deg);
+    box-shadow: 14px 14px 0 rgba(216,167,61,0.18);
+  }
+
+  /* FOOTER */
+  footer{
+    padding:64px 5vw 44px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+    border-top:1px solid var(--line);
+  }
+  footer .brand img{
+    height:64px;
+    width:auto;
+    display:block;
+    margin-left:-4px;
+  }
+  footer .links{display:flex; gap:28px; list-style:none;}
+  footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
+  footer a:hover{color:var(--mustard);}
+  footer .fine{color:#6b675e; font-size:13px; margin-top:6px;}
+
+  @media (max-width: 780px){
+    .hero{grid-template-columns:1fr;}
+    .about{grid-template-columns:1fr;}
+    .about .visual{min-height:280px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#" aria-label="Parkour">
+    <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+  </a>
+  <ul>
+    <li><a href="#designs">Diseños</a></li>
+    <li><a href="#about">Nosotr@s</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-copy">
+    <h1>
+      <span>Remeras</span>
+      <span class="offset">que</span>
+      <span>chocan.</span>
+    </h1>
+    <p>Diseños propios, humor random y cero pretensión. Hechas en Uruguay, una tirada chica a la vez.</p>
+    <div class="cta-row">
+      <button class="btn">Ver diseños</button>
+      <span class="marker">no es para todos ✌</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="tee-card">
+      <div class="tag">nueva</div>
+      <svg viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#F3EFE6" stroke-width="7" fill="none" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M 120 300 C 100 300, 90 280, 95 260 L 105 235 C 108 225, 118 220, 130 220 L 190 220 C 205 190, 240 170, 280 170 L 360 170 C 400 170, 430 195, 445 220 L 470 222 C 495 224, 515 240, 518 262 L 520 285 C 522 300, 510 312, 495 312 L 470 312"/>
+          <path d="M 95 260 L 130 250 L 118 275 L 150 268 L 140 300 L 175 285 L 190 220"/>
+          <line x1="130" y1="312" x2="470" y2="312"/>
+          <circle cx="180" cy="312" r="28"/>
+          <circle cx="420" cy="312" r="28"/>
+        </g>
+        <path d="M 90 195 C 75 175, 40 178, 35 205 C 32 225, 60 250, 90 270 C 120 250, 148 225, 145 205 C 140 178, 105 175, 90 195 Z" fill="#D8A73D"/>
+        <text x="300" y="420" font-family="Georgia, serif" font-size="34" font-weight="bold" fill="#F3EFE6" text-anchor="middle">I HAVE A CRUSH ON YOU</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="designs" id="designs">
+  <h2>Lo último</h2>
+  <p class="sub">Cada diseño sale en tiradas chicas. Cuando se van, se van.</p>
+  <div class="strip">
+    <div class="card">
+      <div class="art">
+        <img src="I%20HAVE%20A%20CRUSH%20ON%20YOU.png" alt="I have a crush on you">
+      </div>
+      <div class="name">I have a crush on you</div>
+      <div class="price">$890</div>
+    </div>
+    <div class="card">
+      <div class="art">
+        <img src="soy%20bonito%20no%20Perfecto.png" alt="Soy bonito no perfecto">
+      </div>
+      <div class="name">Soy bonito no perfecto</div>
+      <div class="price">$890</div>
+    </div>
+    <div class="card">
+      <div class="art">
+        <img src="Agencia%20esapcial%20uruguaya.png" alt="Agencia Espacial Uruguaya">
+      </div>
+      <div class="name">Agencia Espacial Uruguaya</div>
+      <div class="price">$890</div>
+    </div>
+    <div class="card">
+      <div class="art">
+        <img src="IT_S%20NOT%20GONNA%20LICK%20ITSELF.png" alt="It's not gonna lick itself">
+      </div>
+      <div class="name">It's not gonna lick itself</div>
+      <div class="price">$890</div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="text">
+    <span class="eyebrow-free">dos amig@s, una idea</span>
+    <h3>Arrancamos con lo que teníamos: ganas y una carpeta llena de dibujos.</h3>
+    <p>Parkour nace en Montevideo. Cada remera es un diseño original, pensado para que no sea igual a la del de al lado. Sin licencias truchas, sin copiar memes — solo cosas que se nos ocurrieron a nosotras.</p>
+  </div>
+  <div class="visual">
+    <img src="Parkour%20logo%202.jpg" alt="P! SHIRTS">
+  </div>
+</section>
+
+<footer>
+  <div>
+    <div class="brand">
+      <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+    </div>
+    <div class="fine">© 2026 — Montevideo, Uruguay</div>
+  </div>
+  <ul class="links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">Contacto</a></li>
+    <li><a href="#">Envíos</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
