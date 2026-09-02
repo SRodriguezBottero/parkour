@@ -33,6 +33,30 @@
   nav ul{display:flex; gap:36px; list-style:none;}
   nav a{color:var(--bone); text-decoration:none; font-size:17px;}
   nav a:hover{color:var(--mustard);}
+  a:focus-visible,
+  .btn:focus-visible,
+  button:focus-visible{
+    outline:2px solid var(--mustard);
+    outline-offset:3px;
+  }
+  .skip-link{
+    position:absolute;
+    left:5vw;
+    top:0;
+    transform:translateY(-120%);
+    background:var(--mustard);
+    color:var(--black);
+    font-weight:700;
+    font-size:14px;
+    padding:10px 16px;
+    text-decoration:none;
+    z-index:100;
+  }
+  .skip-link:focus{
+    transform:translateY(12px);
+    outline:2px solid var(--bone);
+    outline-offset:2px;
+  }
 
   /* HERO */
   .hero{
@@ -61,7 +85,7 @@
   .cta-row{margin-top:36px; display:flex; align-items:center; gap:20px;}
   .btn{
     display:inline-block;
-    background:var(--brick);
+    background:#a83a26;
     color:var(--bone);
     border:none;
     padding:18px 34px;
@@ -72,7 +96,7 @@
     cursor:pointer;
     clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
   }
-  .btn:hover{background:#a83a26;}
+  .btn:hover{background:#8f311f;}
   .cta-row .marker{color:var(--mustard); font-size:24px; transform:rotate(-4deg);}
 
   .hero-visual{
@@ -168,7 +192,10 @@
     display:inline-block;
     margin-bottom:18px;
   }
-  .about h3{
+  .about h2{
+    font-family:'Archivo Black', sans-serif;
+    text-transform:uppercase;
+    line-height:0.95;
     font-size:clamp(36px,5vw,54px);
     max-width:14ch;
     margin-bottom:24px;
@@ -216,7 +243,7 @@
   footer .links{display:flex; gap:28px; list-style:none;}
   footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
   footer a:hover{color:var(--mustard);}
-  footer .fine{color:#6b675e; font-size:13px; margin-top:6px;}
+  footer .fine{color:#9a968c; font-size:13px; margin-top:6px;}
 
   @media (max-width: 780px){
     .hero{grid-template-columns:1fr;}
@@ -227,7 +254,9 @@
 </head>
 <body>
 
-<nav>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<nav aria-label="Principal">
   <a class="logo" href="index.html" aria-label="Parkour">
     <img src="Prakour%20logo%201.png" alt="PARKOUR!">
   </a>
@@ -238,6 +267,7 @@
   </ul>
 </nav>
 
+<main id="main">
 <section class="hero">
   <div class="hero-copy">
     <h1>
@@ -295,7 +325,7 @@
     </div>
     <div class="card">
       <div class="art">
-        <img src="alexa.png" alt="Alexa">
+        <img src="alexa.png" alt="Alexa... — diseño de remera">
       </div>
       <div class="name">Alexa...</div>
       <div class="price">$890</div>
@@ -306,13 +336,14 @@
 <section class="about" id="about">
   <div class="text">
     <span class="eyebrow-free">dos amig@s, una idea</span>
-    <h3>Arrancamos con lo que teníamos: ganas y una carpeta llena de dibujos.</h3>
+    <h2>Arrancamos con lo que teníamos: ganas y una carpeta llena de dibujos.</h2>
     <p>Parkour nace en Montevideo. Cada remera es un diseño original, pensado para que no sea igual a la del de al lado. Sin licencias truchas, sin copiar memes — solo cosas que se nos ocurrieron a nosotras.</p>
   </div>
   <div class="visual">
     <img src="Parkour%20logo%202.jpg" alt="P! SHIRTS">
   </div>
 </section>
+</main>
 
 <footer>
   <div>

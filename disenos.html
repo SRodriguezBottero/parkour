@@ -36,7 +36,31 @@
   nav ul{display:flex; gap:36px; list-style:none;}
   nav a{color:var(--bone); text-decoration:none; font-size:17px;}
   nav a:hover{color:var(--mustard);}
-  nav a.active{color:var(--mustard);}
+  nav a.active,
+  nav a[aria-current="page"]{color:var(--mustard);}
+  a:focus-visible,
+  button:focus-visible{
+    outline:2px solid var(--mustard);
+    outline-offset:3px;
+  }
+  .skip-link{
+    position:absolute;
+    left:5vw;
+    top:0;
+    transform:translateY(-120%);
+    background:var(--mustard);
+    color:var(--black);
+    font-weight:700;
+    font-size:14px;
+    padding:10px 16px;
+    text-decoration:none;
+    z-index:100;
+  }
+  .skip-link:focus{
+    transform:translateY(12px);
+    outline:2px solid var(--bone);
+    outline-offset:2px;
+  }
 
   main{
     flex:1;
@@ -76,7 +100,7 @@
     transition:background 0.15s, color 0.15s;
   }
   .cat-btn:hover{background:#2a2824; color:var(--mustard);}
-  .cat-btn.active{
+  .cat-btn[aria-pressed="true"]{
     background:var(--mustard);
     color:var(--black);
     font-weight:700;
@@ -152,39 +176,41 @@
   footer .links{display:flex; gap:28px; list-style:none;}
   footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
   footer a:hover{color:var(--mustard);}
-  footer .fine{color:#6b675e; font-size:13px; margin-top:6px;}
+  footer .fine{color:#9a968c; font-size:13px; margin-top:6px;}
 </style>
 </head>
 <body>
 
-<nav>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<nav aria-label="Principal">
   <a class="logo" href="index.html" aria-label="Parkour">
     <img src="Prakour%20logo%201.png" alt="PARKOUR!">
   </a>
   <ul>
-    <li><a href="disenos.html" class="active">Diseños</a></li>
+    <li><a href="disenos.html" aria-current="page">Diseños</a></li>
     <li><a href="index.html#about">Nosotr@s</a></li>
     <li><a href="#">Instagram</a></li>
   </ul>
 </nav>
 
-<main>
+<main id="main">
   <div class="page-head">
     <h1>Lo último</h1>
     <p>Cada diseño sale en tiradas chicas. Cuando se van, se van.</p>
   </div>
 
-  <div class="categories" role="tablist" aria-label="Categorías de diseños">
-    <button class="cat-btn active" type="button" data-category="todos" role="tab" aria-selected="true">Todos</button>
-    <button class="cat-btn" type="button" data-category="big-lebowski" role="tab" aria-selected="false">Big lebowski</button>
-    <button class="cat-btn" type="button" data-category="frases" role="tab" aria-selected="false">Frases</button>
-    <button class="cat-btn" type="button" data-category="lotr" role="tab" aria-selected="false">LOTR</button>
-    <button class="cat-btn" type="button" data-category="pelis-random" role="tab" aria-selected="false">Pelis random</button>
-    <button class="cat-btn" type="button" data-category="seinfeld" role="tab" aria-selected="false">Seinfeld</button>
-    <button class="cat-btn" type="button" data-category="succession" role="tab" aria-selected="false">Succession</button>
+  <div class="categories" role="group" aria-label="Filtrar por categoría">
+    <button class="cat-btn" type="button" data-category="todos" aria-pressed="true">Todos</button>
+    <button class="cat-btn" type="button" data-category="big-lebowski" aria-pressed="false">Big lebowski</button>
+    <button class="cat-btn" type="button" data-category="frases" aria-pressed="false">Frases</button>
+    <button class="cat-btn" type="button" data-category="lotr" aria-pressed="false">LOTR</button>
+    <button class="cat-btn" type="button" data-category="pelis-random" aria-pressed="false">Pelis random</button>
+    <button class="cat-btn" type="button" data-category="seinfeld" aria-pressed="false">Seinfeld</button>
+    <button class="cat-btn" type="button" data-category="succession" aria-pressed="false">Succession</button>
   </div>
 
-  <div class="grid" id="grid">
+  <div class="grid" id="grid" aria-live="polite">
     <div class="card" data-category="frases">
       <div class="art">
         <img src="i_have_a_crush_on_you.png" alt="I have a crush on you">
@@ -215,7 +241,7 @@
     </div>
     <div class="card" data-category="frases">
       <div class="art">
-        <img src="alexa.png" alt="Alexa">
+        <img src="alexa.png" alt="Alexa... — diseño de remera">
       </div>
       <div class="name">Alexa...</div>
       <div class="price">$890</div>
@@ -262,8 +288,7 @@
 
     buttons.forEach(btn => {
       const active = btn.dataset.category === category;
-      btn.classList.toggle('active', active);
-      btn.setAttribute('aria-selected', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
 
     history.replaceState(null, '', category === 'todos' ? 'disenos.html' : `disenos.html?cat=${category}`);
