@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseños — Parkour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#121212;
+    --bone:#F3EFE6;
+    --mustard:#D8A73D;
+    --brick:#C1442E;
+    --line:#33312c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bone);
+    color:var(--black);
+    font-family:'Space Grotesk', sans-serif;
+    overflow-x:hidden;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  .display{font-family:'Archivo Black', sans-serif; text-transform:uppercase; line-height:0.9;}
+
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:32px 5vw;
+    background:var(--black);
+  }
+  nav .logo{display:flex; align-items:center;}
+  nav .logo img{height:112px; width:auto; display:block; margin:-16px 0;}
+  nav ul{display:flex; gap:36px; list-style:none;}
+  nav a{color:var(--bone); text-decoration:none; font-size:17px;}
+  nav a:hover{color:var(--mustard);}
+  nav a.active{color:var(--mustard);}
+
+  main{
+    flex:1;
+    padding:72px 5vw 100px;
+  }
+  .page-head{margin-bottom:56px;}
+  .page-head h1{
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(44px,7vw,80px);
+    text-transform:uppercase;
+    line-height:0.95;
+    letter-spacing:-1px;
+  }
+  .page-head p{
+    margin-top:18px;
+    max-width:46ch;
+    font-size:19px;
+    color:#5c584f;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:36px;
+  }
+  .card{
+    background:var(--black);
+    color:var(--bone);
+    padding:20px 20px 26px;
+    position:relative;
+  }
+  .card:nth-child(4n+1){transform:rotate(-2deg);}
+  .card:nth-child(4n+2){transform:rotate(1.5deg);}
+  .card:nth-child(4n+3){transform:rotate(-1deg);}
+  .card:nth-child(4n){transform:rotate(2deg);}
+  .card .art{
+    aspect-ratio:1;
+    background:#0c0b0a;
+    overflow:hidden;
+  }
+  .card img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+  }
+  .card .name{
+    margin-top:14px;
+    font-weight:700;
+    font-size:17px;
+  }
+  .card .price{color:var(--mustard); font-size:16px; margin-top:4px;}
+
+  footer{
+    padding:64px 5vw 44px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+    border-top:1px solid var(--line);
+    background:var(--black);
+  }
+  footer .brand img{
+    height:64px;
+    width:auto;
+    display:block;
+    margin-left:-4px;
+  }
+  footer .links{display:flex; gap:28px; list-style:none;}
+  footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
+  footer a:hover{color:var(--mustard);}
+  footer .fine{color:#6b675e; font-size:13px; margin-top:6px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html" aria-label="Parkour">
+    <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+  </a>
+  <ul>
+    <li><a href="disenos.html" class="active">Diseños</a></li>
+    <li><a href="index.html#about">Nosotr@s</a></li>
+    <li><a href="#">Instagram</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="page-head">
+    <h1>Lo último</h1>
+    <p>Cada diseño sale en tiradas chicas. Cuando se van, se van.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="art">
+        <img src="i_have_a_crush_on_you.png" alt="I have a crush on you">
+      </div>
+      <div class="name">I have a crush on you</div>
+      <div class="price">$890</div>
+    </div>
+    <div class="card">
+      <div class="art">
+        <img src="soy%20bonito%20no%20Perfecto.png" alt="Soy bonito no perfecto">
+      </div>
+      <div class="name">Soy bonito no perfecto</div>
+      <div class="price">$890</div>
+    </div>
+    <div class="card">
+      <div class="art">
+        <img src="Agencia%20esapcial%20uruguaya.png" alt="Agencia Espacial Uruguaya">
+      </div>
+      <div class="name">Agencia Espacial Uruguaya</div>
+      <div class="price">$890</div>
+    </div>
+    <div class="card">
+      <div class="art">
+        <img src="IT_S%20NOT%20GONNA%20LICK%20ITSELF.png" alt="It's not gonna lick itself">
+      </div>
+      <div class="name">It's not gonna lick itself</div>
+      <div class="price">$890</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div>
+    <div class="brand">
+      <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+    </div>
+    <div class="fine">© 2026 — Montevideo, Uruguay</div>
+  </div>
+  <ul class="links">
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">Contacto</a></li>
+    <li><a href="#">Envíos</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

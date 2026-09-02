@@ -60,6 +60,7 @@
   }
   .cta-row{margin-top:36px; display:flex; align-items:center; gap:20px;}
   .btn{
+    display:inline-block;
     background:var(--brick);
     color:var(--bone);
     border:none;
@@ -67,6 +68,7 @@
     font-family:'Space Grotesk',sans-serif;
     font-weight:700;
     font-size:17px;
+    text-decoration:none;
     cursor:pointer;
     clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
   }
@@ -226,11 +228,11 @@
 <body>
 
 <nav>
-  <a class="logo" href="#" aria-label="Parkour">
+  <a class="logo" href="index.html" aria-label="Parkour">
     <img src="Prakour%20logo%201.png" alt="PARKOUR!">
   </a>
   <ul>
-    <li><a href="#designs">Diseños</a></li>
+    <li><a href="disenos.html">Diseños</a></li>
     <li><a href="#about">Nosotr@s</a></li>
     <li><a href="#">Instagram</a></li>
   </ul>
@@ -245,7 +247,7 @@
     </h1>
     <p>Diseños propios, humor random y cero pretensión. Hechas en Uruguay, una tirada chica a la vez.</p>
     <div class="cta-row">
-      <button class="btn">Ver diseños</button>
+      <a href="disenos.html" class="btn">Ver diseños</a>
       <span class="marker">no es para todos ✌</span>
     </div>
   </div>
