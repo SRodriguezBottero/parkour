@@ -66,6 +66,15 @@
   }
   .back:hover{color:var(--mustard);}
 
+  @keyframes rise{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes settle-product{
+    from{opacity:0; transform:translateY(24px) rotate(4deg);}
+    to{opacity:1; transform:translateY(0) rotate(-2deg);}
+  }
+
   .product{
     display:grid;
     grid-template-columns: 1.05fr 0.95fr;
@@ -78,11 +87,22 @@
     padding:28px;
     transform:rotate(-2deg);
     box-shadow: 18px 18px 0 rgba(216,167,61,0.15);
+    opacity:0;
+    animation:settle-product 0.75s ease 0.08s forwards;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .product-art:hover{
+    transform:rotate(-1deg) translateY(-6px);
+    box-shadow: 20px 22px 0 rgba(216,167,61,0.22);
   }
   .product-art img{
     width:100%;
     height:auto;
     display:block;
+  }
+  .product-copy{
+    opacity:0;
+    animation:rise 0.65s ease 0.22s forwards;
   }
 
   .eyebrow{
@@ -225,7 +245,19 @@
 
   @media (max-width: 780px){
     .product{grid-template-columns:1fr; gap:36px;}
-    .product-art{transform:none;}
+    .product-art{transform:none; animation-name:rise;}
+    .product-art:hover{transform:translateY(-6px);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .product-art,
+    .product-copy{
+      animation:none !important;
+      opacity:1 !important;
+      transition:none !important;
+    }
+    .product-art{transform:rotate(-2deg);}
+    .product-art:hover{transform:rotate(-2deg); box-shadow: 18px 18px 0 rgba(216,167,61,0.15);}
   }
 </style>
 </head>

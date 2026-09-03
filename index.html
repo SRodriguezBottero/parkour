@@ -33,6 +33,21 @@
   .display{font-family:'Archivo Black', sans-serif; text-transform:uppercase; line-height:0.9;}
   .marker{font-family:'Permanent Marker', cursive;}
 
+  @keyframes rise{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes rise-tilt{
+    from{opacity:0; transform:translateY(22px) rotate(var(--tilt, 0deg));}
+    to{opacity:1; transform:translateY(0) rotate(var(--tilt, 0deg));}
+  }
+  @keyframes settle{
+    from{opacity:0; transform:translateY(28px) rotate(8deg);}
+    to{opacity:1; transform:translateY(0) rotate(4deg);}
+  }
+
+  /* HERO */
+
   nav{
     display:flex; justify-content:space-between; align-items:center;
     padding:32px 5vw;
@@ -80,7 +95,14 @@
     font-size:clamp(56px, 9.5vw, 128px);
     letter-spacing:-2px;
   }
-  .hero-copy h1 span{display:block;}
+  .hero-copy h1 span{
+    display:block;
+    opacity:0;
+    animation:rise 0.7s ease forwards;
+  }
+  .hero-copy h1 span:nth-child(1){animation-delay:0.05s;}
+  .hero-copy h1 span:nth-child(2){animation-delay:0.16s;}
+  .hero-copy h1 span:nth-child(3){animation-delay:0.28s;}
   .hero-copy h1 .offset{
     margin-left:12%;
     color:var(--mustard);
@@ -90,8 +112,17 @@
     margin-top:32px;
     font-size:20px;
     color:#c9c5ba;
+    opacity:0;
+    animation:rise 0.65s ease 0.38s forwards;
   }
-  .cta-row{margin-top:36px; display:flex; align-items:center; gap:20px;}
+  .cta-row{
+    margin-top:36px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    opacity:0;
+    animation:rise 0.65s ease 0.5s forwards;
+  }
   .btn{
     display:inline-block;
     background:#a83a26;
@@ -122,8 +153,15 @@
     text-decoration:none;
     color:inherit;
     display:block;
+    opacity:0;
+    animation:settle 0.85s ease 0.35s forwards;
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
   }
-  .tee-card:hover{color:inherit;}
+  .tee-card:hover{
+    color:inherit;
+    transform:rotate(2deg) translateY(-8px);
+    box-shadow: 22px 26px 0 rgba(216,167,61,0.22);
+  }
   .tee-card img{width:100%; height:auto; display:block;}
   .tag{
     position:absolute;
@@ -169,11 +207,28 @@
     position:relative;
     text-decoration:none;
     display:block;
+    --tilt:0deg;
+    opacity:0;
+    animation:rise-tilt 0.55s ease forwards;
+    transition:transform 0.28s ease, box-shadow 0.28s ease;
   }
+  .card:nth-child(1){animation-delay:0.05s;}
+  .card:nth-child(2){animation-delay:0.12s;}
+  .card:nth-child(3){animation-delay:0.19s;}
+  .card:nth-child(4){animation-delay:0.26s;}
+  .card:nth-child(5){animation-delay:0.33s;}
   .card:hover{color:var(--bone);}
   .card:hover .name{color:var(--mustard);}
-  .card:nth-child(odd){transform:rotate(-3deg);}
-  .card:nth-child(even){transform:rotate(2deg);}
+  .card:nth-child(odd){--tilt:-3deg; transform:rotate(-3deg);}
+  .card:nth-child(even){--tilt:2deg; transform:rotate(2deg);}
+  .card:nth-child(odd):hover{
+    transform:translateY(-10px) rotate(-2deg);
+    box-shadow: 10px 14px 0 rgba(216,167,61,0.2);
+  }
+  .card:nth-child(even):hover{
+    transform:translateY(-10px) rotate(1deg);
+    box-shadow: 10px 14px 0 rgba(216,167,61,0.2);
+  }
   .card .art{
     aspect-ratio:1;
     background:#0c0b0a;
@@ -266,6 +321,30 @@
     .hero{grid-template-columns:1fr;}
     .about{grid-template-columns:1fr;}
     .about .visual{min-height:280px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero-copy h1 span,
+    .hero-copy p,
+    .cta-row,
+    .tee-card,
+    .card{
+      animation:none !important;
+      opacity:1 !important;
+      transition:none !important;
+    }
+    .tee-card{transform:rotate(4deg);}
+    .card:nth-child(odd){transform:rotate(-3deg);}
+    .card:nth-child(even){transform:rotate(2deg);}
+    .tee-card:hover,
+    .card:nth-child(odd):hover,
+    .card:nth-child(even):hover{
+      transform:none;
+      box-shadow:none;
+    }
+    .tee-card:hover{transform:rotate(4deg); box-shadow: 18px 18px 0 rgba(216,167,61,0.15);}
+    .card:nth-child(odd):hover{transform:rotate(-3deg);}
+    .card:nth-child(even):hover{transform:rotate(2deg);}
   }
 </style>
 </head>
