@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Producto — Parkour</title>
+<meta name="description" content="Remera Parkour. Diseños propios, tiradas chicas, hechas en Uruguay.">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Parkour">
+<meta property="og:title" content="Producto — Parkour">
+<meta property="og:description" content="Remera Parkour. Diseños propios, tiradas chicas, hechas en Uruguay.">
+<meta property="og:image" content="https://arteroto.netlify.app/i_have_a_crush_on_you.png">
+<meta property="og:url" content="https://arteroto.netlify.app/producto.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="Prakour%20logo%201.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#121212;
+    --bone:#F3EFE6;
+    --mustard:#D8A73D;
+    --brick:#C1442E;
+    --line:#33312c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--black);
+    color:var(--bone);
+    font-family:'Space Grotesk', sans-serif;
+    overflow-x:hidden;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--mustard);
+    outline-offset:3px;
+  }
+  .skip-link{
+    position:absolute; left:5vw; top:0;
+    transform:translateY(-120%);
+    background:var(--mustard); color:var(--black);
+    font-weight:700; font-size:14px; padding:10px 16px;
+    text-decoration:none; z-index:100;
+  }
+  .skip-link:focus{transform:translateY(12px);}
+
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:32px 5vw;
+  }
+  nav .logo img{height:112px; width:auto; display:block; margin:-16px 0;}
+  nav ul{display:flex; gap:36px; list-style:none;}
+  nav a{color:var(--bone); text-decoration:none; font-size:17px;}
+  nav a:hover{color:var(--mustard);}
+
+  main{flex:1; padding:40px 5vw 100px;}
+
+  .back{
+    display:inline-block;
+    color:#c9c5ba;
+    text-decoration:none;
+    font-size:15px;
+    margin-bottom:36px;
+  }
+  .back:hover{color:var(--mustard);}
+
+  .product{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap:56px;
+    align-items:start;
+  }
+  .product-art{
+    background:#0c0b0a;
+    border:1px solid var(--line);
+    padding:28px;
+    transform:rotate(-2deg);
+    box-shadow: 18px 18px 0 rgba(216,167,61,0.15);
+  }
+  .product-art img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+
+  .eyebrow{
+    font-family:'Permanent Marker', cursive;
+    color:var(--mustard);
+    font-size:20px;
+    transform:rotate(-3deg);
+    display:inline-block;
+    margin-bottom:14px;
+  }
+  .product h1{
+    font-family:'Archivo Black', sans-serif;
+    text-transform:uppercase;
+    font-size:clamp(36px,5vw,56px);
+    line-height:0.95;
+    letter-spacing:-1px;
+    margin-bottom:16px;
+  }
+  .price{
+    color:var(--mustard);
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .desc{
+    max-width:42ch;
+    color:#c9c5ba;
+    font-size:18px;
+    line-height:1.6;
+    margin-bottom:32px;
+  }
+
+  .field{margin-bottom:28px;}
+  .field legend,
+  .field > span{
+    display:block;
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:12px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
+  .sizes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    border:0;
+  }
+  .sizes label{
+    cursor:pointer;
+  }
+  .sizes input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+  }
+  .sizes span{
+    display:inline-block;
+    min-width:48px;
+    text-align:center;
+    padding:12px 14px;
+    border:1px solid var(--line);
+    font-weight:700;
+    font-size:15px;
+  }
+  .sizes input:focus-visible + span{
+    outline:2px solid var(--mustard);
+    outline-offset:3px;
+  }
+  .sizes input:checked + span{
+    background:var(--mustard);
+    color:var(--black);
+    border-color:var(--mustard);
+  }
+
+  .actions{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:18px;
+    margin-top:8px;
+  }
+  .btn{
+    display:inline-block;
+    background:#a83a26;
+    color:var(--bone);
+    border:none;
+    padding:18px 34px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:17px;
+    text-decoration:none;
+    cursor:pointer;
+    clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
+  }
+  .btn:hover{background:#8f311f;}
+  .hint{
+    font-family:'Permanent Marker', cursive;
+    color:var(--mustard);
+    font-size:18px;
+    transform:rotate(-3deg);
+  }
+
+  .note{
+    margin-top:36px;
+    max-width:40ch;
+    color:#9a968c;
+    font-size:14px;
+    line-height:1.5;
+  }
+
+  .missing{
+    display:none;
+    padding:80px 0;
+  }
+  .missing.visible{display:block;}
+  .product.hidden{display:none;}
+  .missing h1{
+    font-family:'Archivo Black', sans-serif;
+    font-size:clamp(36px,5vw,56px);
+    text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .missing p{color:#c9c5ba; margin-bottom:28px;}
+
+  footer{
+    padding:64px 5vw 44px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+    border-top:1px solid var(--line);
+  }
+  footer .brand img{height:64px; width:auto; display:block; margin-left:-4px;}
+  footer .links{display:flex; gap:28px; list-style:none;}
+  footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
+  footer a:hover{color:var(--mustard);}
+  footer .fine{color:#9a968c; font-size:13px; margin-top:6px;}
+
+  @media (max-width: 780px){
+    .product{grid-template-columns:1fr; gap:36px;}
+    .product-art{transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<nav aria-label="Principal">
+  <a class="logo" href="index.html" aria-label="Parkour">
+    <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+  </a>
+  <ul>
+    <li><a href="disenos.html">Diseños</a></li>
+    <li><a href="index.html#about">Nosotr@s</a></li>
+    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+  <a class="back" href="disenos.html">← Volver a diseños</a>
+
+  <div class="product" id="product">
+    <div class="product-art">
+      <img id="p-img" src="" alt="">
+    </div>
+    <div class="product-copy">
+      <span class="eyebrow" id="p-cat"></span>
+      <h1 id="p-name"></h1>
+      <div class="price" id="p-price"></div>
+      <p class="desc" id="p-desc"></p>
+
+      <fieldset class="field sizes" id="sizes">
+        <legend>Talle</legend>
+        <label><input type="radio" name="size" value="S"><span>S</span></label>
+        <label><input type="radio" name="size" value="M" checked><span>M</span></label>
+        <label><input type="radio" name="size" value="L"><span>L</span></label>
+        <label><input type="radio" name="size" value="XL"><span>XL</span></label>
+        <label><input type="radio" name="size" value="XXL"><span>XXL</span></label>
+        <label><input type="radio" name="size" value="XXXL"><span>XXXL</span></label>
+      </fieldset>
+
+      <div class="actions">
+        <a class="btn" id="p-cta" href="contacto.html">Consultar por Instagram</a>
+        <span class="hint">tirada chica</span>
+      </div>
+      <p class="note">Sin carrito por ahora: elegís diseño y talle, y te respondemos por Instagram o WhatsApp.</p>
+    </div>
+  </div>
+
+  <div class="missing" id="missing">
+    <h1>Ese diseño no está</h1>
+    <p>Puede que se haya agotado o que el link esté viejo.</p>
+    <a class="btn" href="disenos.html">Ver diseños</a>
+  </div>
+</main>
+
+<footer>
+  <div>
+    <div class="brand">
+      <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+    </div>
+    <div class="fine">© 2026 — Montevideo, Uruguay</div>
+  </div>
+  <ul class="links">
+    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="envios.html">Envíos</a></li>
+  </ul>
+</footer>
+
+<script>
+  const PRODUCTS = {
+    crush: {
+      name: 'I have a crush on you',
+      price: '$890',
+      category: 'Frases',
+      image: 'i_have_a_crush_on_you.png',
+      desc: 'Dos autos, un choque y cero sutileza. Diseño propio, print en remera, tirada chica.'
+    },
+    'soy-bonito': {
+      name: 'Soy bonito no perfecto',
+      price: '$890',
+      category: 'Pelis random',
+      image: 'soy bonito no Perfecto.png',
+      desc: 'Autoestima con humor. Para quienes saben que bonito no es lo mismo que perfecto.'
+    },
+    agencia: {
+      name: 'Agencia Espacial Uruguaya',
+      price: '$890',
+      category: 'Frases',
+      image: 'Agencia esapcial uruguaya.png',
+      desc: 'El termo como cohete oficial. Parodia local, diseño original, cero licencia trucha.'
+    },
+    lick: {
+      name: "It's not gonna lick itself",
+      price: '$890',
+      category: 'Frases',
+      image: 'IT_S NOT GONNA LICK ITSELF.png',
+      desc: 'Frase que se entiende sola. Remera para quienes no se andan con vueltas.'
+    },
+    alexa: {
+      name: 'Alexa...',
+      price: '$890',
+      category: 'Frases',
+      image: 'alexa.png',
+      desc: 'Cuando la conversación se pone interesante. Diseño propio, tirada limitada.'
+    }
+  };
+
+  const id = new URLSearchParams(location.search).get('id');
+  const product = PRODUCTS[id];
+  const productEl = document.getElementById('product');
+  const missingEl = document.getElementById('missing');
+
+  if (!product) {
+    productEl.classList.add('hidden');
+    missingEl.classList.add('visible');
+    document.title = 'No encontrado — Parkour';
+  } else {
+    document.getElementById('p-img').src = product.image;
+    document.getElementById('p-img').alt = product.name + ' — diseño de remera';
+    document.getElementById('p-cat').textContent = product.category;
+    document.getElementById('p-name').textContent = product.name;
+    document.getElementById('p-price').textContent = product.price;
+    document.getElementById('p-desc').textContent = product.desc;
+    document.title = product.name + ' — Parkour';
+
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogTitle) ogTitle.setAttribute('content', product.name + ' — Parkour');
+    if (ogDesc) ogDesc.setAttribute('content', product.desc);
+    if (ogImage) ogImage.setAttribute('content', 'https://arteroto.netlify.app/' + encodeURI(product.image));
+    if (ogUrl) ogUrl.setAttribute('content', 'https://arteroto.netlify.app/producto.html?id=' + id);
+
+    const cta = document.getElementById('p-cta');
+    function updateCta() {
+      const size = document.querySelector('input[name="size"]:checked')?.value || 'M';
+      const text = encodeURIComponent(`Hola! Quiero la remera "${product.name}" talle ${size}`);
+      cta.href = `contacto.html?msg=${text}&product=${encodeURIComponent(product.name)}&size=${size}`;
+    }
+    document.querySelectorAll('input[name="size"]').forEach(input => {
+      input.addEventListener('change', updateCta);
+    });
+    updateCta();
+  }
+</script>
+
+</body>
+</html>

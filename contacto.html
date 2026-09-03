@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contacto — Parkour</title>
+<meta name="description" content="Pedí tu remera Parkour por Instagram o WhatsApp. Montevideo, Uruguay.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Parkour">
+<meta property="og:title" content="Contacto — Parkour">
+<meta property="og:description" content="Pedí tu remera Parkour por Instagram o WhatsApp. Montevideo, Uruguay.">
+<meta property="og:image" content="https://arteroto.netlify.app/Prakour%20logo%201.png">
+<meta property="og:url" content="https://arteroto.netlify.app/contacto.html">
+<link rel="icon" href="Prakour%20logo%201.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#121212;
+    --bone:#F3EFE6;
+    --mustard:#D8A73D;
+    --line:#33312c;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--black);
+    color:var(--bone);
+    font-family:'Space Grotesk', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--mustard);
+    outline-offset:3px;
+  }
+  .skip-link{
+    position:absolute; left:5vw; top:0;
+    transform:translateY(-120%);
+    background:var(--mustard); color:var(--black);
+    font-weight:700; font-size:14px; padding:10px 16px;
+    text-decoration:none; z-index:100;
+  }
+  .skip-link:focus{transform:translateY(12px);}
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:32px 5vw;
+  }
+  nav .logo img{height:112px; width:auto; display:block; margin:-16px 0;}
+  nav ul{display:flex; gap:36px; list-style:none;}
+  nav a{color:var(--bone); text-decoration:none; font-size:17px;}
+  nav a:hover{color:var(--mustard);}
+  main{flex:1; padding:72px 5vw 100px; max-width:720px;}
+  .eyebrow{
+    font-family:'Permanent Marker', cursive;
+    color:var(--mustard);
+    font-size:22px;
+    transform:rotate(-3deg);
+    display:inline-block;
+    margin-bottom:16px;
+  }
+  h1{
+    font-family:'Archivo Black', sans-serif;
+    text-transform:uppercase;
+    font-size:clamp(40px,6vw,68px);
+    line-height:0.95;
+    letter-spacing:-1px;
+    margin-bottom:20px;
+  }
+  .lead{
+    color:#c9c5ba;
+    font-size:19px;
+    line-height:1.6;
+    max-width:40ch;
+    margin-bottom:40px;
+  }
+  .steps{
+    list-style:none;
+    margin-bottom:48px;
+  }
+  .steps li{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+    margin-bottom:18px;
+    color:#c9c5ba;
+    font-size:17px;
+    line-height:1.45;
+  }
+  .steps strong{
+    color:var(--mustard);
+    font-family:'Permanent Marker', cursive;
+    font-size:22px;
+    min-width:1.5ch;
+  }
+  .actions{display:flex; flex-wrap:wrap; gap:16px; margin-bottom:28px;}
+  .btn{
+    display:inline-block;
+    background:#a83a26;
+    color:var(--bone);
+    padding:18px 34px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:17px;
+    text-decoration:none;
+    clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
+  }
+  .btn:hover{background:#8f311f;}
+  .btn-ghost{
+    display:inline-block;
+    color:var(--bone);
+    border:1px solid var(--line);
+    padding:17px 28px;
+    text-decoration:none;
+    font-weight:700;
+    font-size:16px;
+  }
+  .btn-ghost:hover{border-color:var(--mustard); color:var(--mustard);}
+  .draft{
+    background:#1c1a17;
+    border:1px solid var(--line);
+    padding:20px 22px;
+    color:#c9c5ba;
+    font-size:15px;
+    line-height:1.5;
+    max-width:46ch;
+  }
+  .draft strong{color:var(--bone);}
+  .fine-note{margin-top:16px; color:#9a968c; font-size:13px; max-width:46ch;}
+  footer{
+    padding:64px 5vw 44px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+    border-top:1px solid var(--line);
+  }
+  footer .brand img{height:64px; width:auto; display:block; margin-left:-4px;}
+  footer .links{display:flex; gap:28px; list-style:none;}
+  footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
+  footer a:hover{color:var(--mustard);}
+  footer .fine{color:#9a968c; font-size:13px; margin-top:6px;}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Saltar al contenido</a>
+
+<nav aria-label="Principal">
+  <a class="logo" href="index.html" aria-label="Parkour">
+    <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+  </a>
+  <ul>
+    <li><a href="disenos.html">Diseños</a></li>
+    <li><a href="index.html#about">Nosotr@s</a></li>
+    <li><a id="nav-ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+  <span class="eyebrow">sin carrito, con onda</span>
+  <h1>Cómo pedís</h1>
+  <p class="lead">Elegís diseño y talle, nos escribís, y coordinamos. Tiradas chicas: cuando se van, se van.</p>
+
+  <ol class="steps">
+    <li><strong>1</strong> <span>Mirás los <a href="disenos.html" style="color:var(--mustard)">diseños</a> y abrís el que te gusta.</span></li>
+    <li><strong>2</strong> <span>Elegís talle.</span></li>
+    <li><strong>3</strong> <span>Nos mandás mensaje por Instagram o WhatsApp.</span></li>
+  </ol>
+
+  <div class="actions">
+    <a class="btn" id="ig-btn" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Abrir Instagram</a>
+    <a class="btn-ghost" id="wa-btn" href="https://wa.me/" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+  </div>
+
+  <div class="draft" id="draft">
+    <strong>Mensaje sugerido</strong><br>
+    <span id="draft-text">Hola! Quiero una remera Parkour.</span>
+  </div>
+  <p class="fine-note">Si todavía no configuramos el WhatsApp, usá Instagram y pegá el mensaje sugerido.</p>
+</main>
+
+<footer>
+  <div>
+    <div class="brand">
+      <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+    </div>
+    <div class="fine">© 2026 — Montevideo, Uruguay</div>
+  </div>
+  <ul class="links">
+    <li><a id="ft-ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a href="contacto.html" aria-current="page">Contacto</a></li>
+    <li><a href="envios.html">Envíos</a></li>
+  </ul>
+</footer>
+
+<script>
+  // ← Cambiá estos dos cuando tengas los datos reales
+  const INSTAGRAM_URL = 'https://www.instagram.com/';
+  const WHATSAPP_URL = 'https://wa.me/'; // ej: https://wa.me/59899123456
+
+  const params = new URLSearchParams(location.search);
+  const msg = params.get('msg') || 'Hola! Quiero una remera Parkour.';
+  const product = params.get('product');
+  const size = params.get('size');
+
+  document.getElementById('draft-text').textContent = decodeURIComponent(msg);
+
+  document.querySelectorAll('#ig-btn, #nav-ig, #ft-ig').forEach(a => {
+    a.href = INSTAGRAM_URL;
+  });
+
+  const wa = document.getElementById('wa-btn');
+  wa.href = WHATSAPP_URL.includes('wa.me/') && WHATSAPP_URL.length > 'https://wa.me/'.length
+    ? `${WHATSAPP_URL}?text=${encodeURIComponent(decodeURIComponent(msg))}`
+    : WHATSAPP_URL;
+
+  if (product && size) {
+    document.querySelector('.lead').textContent =
+      `Vas por “${product}” talle ${size}. Mandanos el mensaje y lo coordinamos.`;
+  }
+</script>
+
+</body>
+</html>

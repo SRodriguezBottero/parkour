@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diseños — Parkour</title>
+<meta name="description" content="Catálogo Parkour: remeras en tiradas chicas. Frases, pelis y más.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Parkour">
+<meta property="og:title" content="Diseños — Parkour">
+<meta property="og:description" content="Catálogo Parkour: remeras en tiradas chicas. Frases, pelis y más.">
+<meta property="og:image" content="https://arteroto.netlify.app/i_have_a_crush_on_you.png">
+<meta property="og:url" content="https://arteroto.netlify.app/disenos.html">
+<link rel="icon" href="Prakour%20logo%201.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
@@ -133,7 +141,11 @@
     color:var(--bone);
     padding:20px 20px 26px;
     position:relative;
+    text-decoration:none;
+    display:block;
   }
+  .card:hover{color:var(--bone);}
+  .card:hover .name{color:var(--mustard);}
   .card:nth-child(4n+1){transform:rotate(-2deg);}
   .card:nth-child(4n+2){transform:rotate(1.5deg);}
   .card:nth-child(4n+3){transform:rotate(-1deg);}
@@ -190,7 +202,7 @@
   <ul>
     <li><a href="disenos.html" aria-current="page">Diseños</a></li>
     <li><a href="index.html#about">Nosotr@s</a></li>
-    <li><a href="#">Instagram</a></li>
+    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
   </ul>
 </nav>
 
@@ -211,41 +223,41 @@
   </div>
 
   <div class="grid" id="grid" aria-live="polite">
-    <div class="card" data-category="frases">
+    <a class="card" data-category="frases" href="producto.html?id=crush">
       <div class="art">
         <img src="i_have_a_crush_on_you.png" alt="I have a crush on you">
       </div>
       <div class="name">I have a crush on you</div>
       <div class="price">$890</div>
-    </div>
-    <div class="card" data-category="pelis-random">
+    </a>
+    <a class="card" data-category="pelis-random" href="producto.html?id=soy-bonito">
       <div class="art">
         <img src="soy%20bonito%20no%20Perfecto.png" alt="Soy bonito no perfecto">
       </div>
       <div class="name">Soy bonito no perfecto</div>
       <div class="price">$890</div>
-    </div>
-    <div class="card" data-category="frases">
+    </a>
+    <a class="card" data-category="frases" href="producto.html?id=agencia">
       <div class="art">
         <img src="Agencia%20esapcial%20uruguaya.png" alt="Agencia Espacial Uruguaya">
       </div>
       <div class="name">Agencia Espacial Uruguaya</div>
       <div class="price">$890</div>
-    </div>
-    <div class="card" data-category="frases">
+    </a>
+    <a class="card" data-category="frases" href="producto.html?id=lick">
       <div class="art">
         <img src="IT_S%20NOT%20GONNA%20LICK%20ITSELF.png" alt="It's not gonna lick itself">
       </div>
       <div class="name">It's not gonna lick itself</div>
       <div class="price">$890</div>
-    </div>
-    <div class="card" data-category="frases">
+    </a>
+    <a class="card" data-category="frases" href="producto.html?id=alexa">
       <div class="art">
         <img src="alexa.png" alt="Alexa... — diseño de remera">
       </div>
       <div class="name">Alexa...</div>
       <div class="price">$890</div>
-    </div>
+    </a>
   </div>
 
   <div class="empty" id="empty" aria-live="polite">
@@ -262,9 +274,9 @@
     <div class="fine">© 2026 — Montevideo, Uruguay</div>
   </div>
   <ul class="links">
-    <li><a href="#">Instagram</a></li>
-    <li><a href="#">Contacto</a></li>
-    <li><a href="#">Envíos</a></li>
+    <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="envios.html">Envíos</a></li>
   </ul>
 </footer>
 
