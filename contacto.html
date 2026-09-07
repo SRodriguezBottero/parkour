@@ -45,11 +45,56 @@
   nav{
     display:flex; justify-content:space-between; align-items:center;
     padding:32px 5vw;
+    position:relative;
+    z-index:20;
   }
   nav .logo img{height:112px; width:auto; display:block; margin:-16px 0;}
-  nav ul{display:flex; gap:36px; list-style:none;}
+  nav > ul{display:flex; gap:36px; list-style:none; align-items:center;}
   nav a{color:var(--bone); text-decoration:none; font-size:17px;}
   nav a:hover{color:var(--mustard);}
+  nav a[aria-current="page"]{color:var(--mustard);}
+  nav .has-submenu{position:relative;}
+  nav .has-submenu > a{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+  }
+  nav .has-submenu > a::after{
+    content:'';
+    width:0; height:0;
+    border-left:4px solid transparent;
+    border-right:4px solid transparent;
+    border-top:5px solid currentColor;
+    opacity:0.75;
+  }
+  nav .submenu{
+    display:none;
+    position:absolute;
+    top:100%;
+    left:0;
+    min-width:220px;
+    background:#1a1916;
+    border:1px solid var(--line);
+    padding:12px 0 8px;
+    list-style:none;
+    flex-direction:column;
+    z-index:30;
+    box-shadow:8px 10px 0 rgba(216,167,61,0.18);
+  }
+  nav .has-submenu.is-open > .submenu{
+    display:flex;
+  }
+  nav .submenu a{
+    display:block;
+    padding:11px 18px;
+    font-size:15px;
+    white-space:nowrap;
+  }
+  nav .submenu a:hover,
+  nav .submenu a[aria-current="page"]{
+    color:var(--mustard);
+    background:#2a2824;
+  }
   main{flex:1; padding:72px 5vw 100px; max-width:720px;}
   .eyebrow{
     font-family:'Permanent Marker', cursive;
@@ -149,12 +194,23 @@
 
 <nav aria-label="Principal">
   <a class="logo" href="index.html" aria-label="Parkour">
-    <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+    <img src="Prakour%20logo%201.png" alt="">
   </a>
   <ul>
-    <li><a href="disenos.html">Diseños</a></li>
+    <li class="has-submenu">
+      <a href="disenos.html" aria-haspopup="menu" aria-expanded="false" aria-controls="submenu-disenos">Diseños</a>
+      <ul class="submenu" id="submenu-disenos" hidden aria-label="Categorías de diseños">
+        <li><a href="disenos.html">Todos</a></li>
+        <li><a href="disenos.html?cat=big-lebowski">Big lebowski</a></li>
+        <li><a href="disenos.html?cat=frases">Frases</a></li>
+        <li><a href="disenos.html?cat=lotr">LOTR</a></li>
+        <li><a href="disenos.html?cat=pelis-random">Pelis random</a></li>
+        <li><a href="disenos.html?cat=seinfeld">Seinfeld</a></li>
+        <li><a href="disenos.html?cat=succession">Succession</a></li>
+      </ul>
+    </li>
     <li><a href="index.html#about">Nosotr@s</a></li>
-    <li><a id="nav-ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a id="nav-ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (se abre en otra pestaña)">Instagram</a></li>
   </ul>
 </nav>
 
@@ -170,8 +226,8 @@
   </ol>
 
   <div class="actions">
-    <a class="btn" id="ig-btn" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Abrir Instagram</a>
-    <a class="btn-ghost" id="wa-btn" href="https://wa.me/" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <a class="btn" id="ig-btn" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram (se abre en otra pestaña)">Abrir Instagram</a>
+    <a class="btn-ghost" id="wa-btn" href="https://wa.me/" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp (se abre en otra pestaña)">WhatsApp</a>
   </div>
 
   <div class="draft" id="draft">
@@ -184,12 +240,12 @@
 <footer>
   <div>
     <div class="brand">
-      <img src="Prakour%20logo%201.png" alt="PARKOUR!">
+      <img src="Prakour%20logo%201.png" alt="">
     </div>
     <div class="fine">© 2026 — Montevideo, Uruguay</div>
   </div>
   <ul class="links">
-    <li><a id="ft-ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+    <li><a id="ft-ig" href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram (se abre en otra pestaña)">Instagram</a></li>
     <li><a href="contacto.html" aria-current="page">Contacto</a></li>
     <li><a href="envios.html">Envíos</a></li>
   </ul>
@@ -221,6 +277,7 @@
       `Vas por “${product}” talle ${size}. Mandanos el mensaje y lo coordinamos.`;
   }
 </script>
+<script src="nav.js"></script>
 
 </body>
 </html>
