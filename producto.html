@@ -12,7 +12,7 @@
 <meta property="og:image" content="https://arteroto.netlify.app/i_have_a_crush_on_you.png">
 <meta property="og:url" content="https://arteroto.netlify.app/producto.html">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="Prakour%20logo%201.png" type="image/png">
+<link rel="icon" href="Parkour%20logo%201.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
@@ -312,7 +312,7 @@
 
 <nav aria-label="Principal">
   <a class="logo" href="index.html" aria-label="Parkour">
-    <img src="Prakour%20logo%201.png" alt="">
+    <img src="Parkour%20logo%201.png" alt="">
   </a>
   <ul>
     <li class="has-submenu">
@@ -373,7 +373,7 @@
 <footer>
   <div>
     <div class="brand">
-      <img src="Prakour%20logo%201.png" alt="">
+      <img src="Parkour%20logo%201.png" alt="">
     </div>
     <div class="fine">© 2026 — Montevideo, Uruguay</div>
   </div>
@@ -384,85 +384,54 @@
   </ul>
 </footer>
 
+<script src="products.js"></script>
 <script>
-  const PRODUCTS = {
-    crush: {
-      name: 'I have a crush on you',
-      price: '$890',
-      category: 'Frases',
-      image: 'i_have_a_crush_on_you.png',
-      desc: 'Dos autos, un choque y cero sutileza. Diseño propio, print en remera, tirada chica.'
-    },
-    'soy-bonito': {
-      name: 'Soy bonito no perfecto',
-      price: '$890',
-      category: 'Pelis random',
-      image: 'soy bonito no Perfecto.png',
-      desc: 'Autoestima con humor. Para quienes saben que bonito no es lo mismo que perfecto.'
-    },
-    agencia: {
-      name: 'Agencia Espacial Uruguaya',
-      price: '$890',
-      category: 'Frases',
-      image: 'Agencia esapcial uruguaya.png',
-      desc: 'El termo como cohete oficial. Parodia local, diseño original, cero licencia trucha.'
-    },
-    lick: {
-      name: "It's not gonna lick itself",
-      price: '$890',
-      category: 'Frases',
-      image: 'IT_S NOT GONNA LICK ITSELF.png',
-      desc: 'Frase que se entiende sola. Remera para quienes no se andan con vueltas.'
-    },
-    alexa: {
-      name: 'Alexa...',
-      price: '$890',
-      category: 'Frases',
-      image: 'alexa.png',
-      desc: 'Cuando la conversación se pone interesante. Diseño propio, tirada limitada.'
-    }
-  };
-
-  const id = new URLSearchParams(location.search).get('id');
-  const product = PRODUCTS[id];
-  const productEl = document.getElementById('product');
-  const missingEl = document.getElementById('missing');
+(function() {
+  var id = new URLSearchParams(location.search).get('id');
+  var product = PARKOUR_UTILS.getProductById(id);
+  var productEl = document.getElementById('product');
+  var missingEl = document.getElementById('missing');
 
   if (!product) {
     productEl.classList.add('hidden');
     missingEl.classList.add('visible');
     document.title = 'No encontrado — Parkour';
   } else {
-    document.getElementById('p-img').src = product.image;
+    var imgSrc = PARKOUR_UTILS.encodeImageSrc(product.image);
+    document.getElementById('p-img').src = imgSrc;
     document.getElementById('p-img').alt = product.name + ' — diseño de remera';
-    document.getElementById('p-cat').textContent = product.category;
+    document.getElementById('p-cat').textContent = product.categoryLabel;
     document.getElementById('p-name').textContent = product.name;
     document.getElementById('p-price').textContent = product.price;
     document.getElementById('p-desc').textContent = product.desc;
     document.title = product.name + ' — Parkour';
 
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    const ogImage = document.querySelector('meta[property="og:image"]');
-    const ogUrl = document.querySelector('meta[property="og:url"]');
+    var ogTitle = document.querySelector('meta[property="og:title"]');
+    var ogDesc = document.querySelector('meta[property="og:description"]');
+    var ogImage = document.querySelector('meta[property="og:image"]');
+    var ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogTitle) ogTitle.setAttribute('content', product.name + ' — Parkour');
     if (ogDesc) ogDesc.setAttribute('content', product.desc);
     if (ogImage) ogImage.setAttribute('content', 'https://arteroto.netlify.app/' + encodeURI(product.image));
     if (ogUrl) ogUrl.setAttribute('content', 'https://arteroto.netlify.app/producto.html?id=' + id);
 
-    const cta = document.getElementById('p-cta');
+    var cta = document.getElementById('p-cta');
     function updateCta() {
-      const size = document.querySelector('input[name="size"]:checked')?.value || 'M';
-      const text = encodeURIComponent(`Hola! Quiero la remera "${product.name}" talle ${size}`);
-      cta.href = `contacto.html?msg=${text}&product=${encodeURIComponent(product.name)}&size=${size}`;
+      var sizeInput = document.querySelector('input[name="size"]:checked');
+      var size = sizeInput ? sizeInput.value : 'M';
+      var text = encodeURIComponent('Hola! Quiero la remera "' + product.name + '" talle ' + size);
+      cta.href = 'contacto.html?msg=' + text + '&product=' + encodeURIComponent(product.name) + '&size=' + size;
     }
-    document.querySelectorAll('input[name="size"]').forEach(input => {
-      input.addEventListener('change', updateCta);
-    });
+    var sizeInputs = document.querySelectorAll('input[name="size"]');
+    for (var i = 0; i < sizeInputs.length; i++) {
+      sizeInputs[i].addEventListener('change', updateCta);
+    }
     updateCta();
   }
+})();
 </script>
 <script src="nav.js"></script>
+<script src="welcome.js"></script>
 
 </body>
 </html>
