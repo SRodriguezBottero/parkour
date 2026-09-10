@@ -11,7 +11,7 @@
 <meta property="og:description" content="Catálogo Parkour: remeras en tiradas chicas. Frases, pelis y más.">
 <meta property="og:image" content="https://arteroto.netlify.app/i_have_a_crush_on_you.png">
 <meta property="og:url" content="https://arteroto.netlify.app/disenos.html">
-<link rel="icon" href="Prakour%20logo%201.png" type="image/png">
+<link rel="icon" href="Parkour%20logo%201.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Permanent+Marker&display=swap" rel="stylesheet">
 <style>
@@ -250,7 +250,7 @@
 
 <nav aria-label="Principal">
   <a class="logo" href="index.html" aria-label="Parkour">
-    <img src="Prakour%20logo%201.png" alt="">
+    <img src="Parkour%20logo%201.png" alt="">
   </a>
   <ul>
     <li class="has-submenu">
@@ -276,43 +276,7 @@
     <p>Cada diseño sale en tiradas chicas. Cuando se van, se van.</p>
   </div>
 
-  <div class="grid" id="grid">
-    <a class="card" data-category="frases" href="producto.html?id=crush">
-      <div class="art">
-        <img src="i_have_a_crush_on_you.png" alt="">
-      </div>
-      <div class="name">I have a crush on you</div>
-      <div class="price">$890</div>
-    </a>
-    <a class="card" data-category="pelis-random" href="producto.html?id=soy-bonito">
-      <div class="art">
-        <img src="soy%20bonito%20no%20Perfecto.png" alt="">
-      </div>
-      <div class="name">Soy bonito no perfecto</div>
-      <div class="price">$890</div>
-    </a>
-    <a class="card" data-category="frases" href="producto.html?id=agencia">
-      <div class="art">
-        <img src="Agencia%20esapcial%20uruguaya.png" alt="">
-      </div>
-      <div class="name">Agencia Espacial Uruguaya</div>
-      <div class="price">$890</div>
-    </a>
-    <a class="card" data-category="frases" href="producto.html?id=lick">
-      <div class="art">
-        <img src="IT_S%20NOT%20GONNA%20LICK%20ITSELF.png" alt="">
-      </div>
-      <div class="name">It's not gonna lick itself</div>
-      <div class="price">$890</div>
-    </a>
-    <a class="card" data-category="frases" href="producto.html?id=alexa">
-      <div class="art">
-        <img src="alexa.png" alt="">
-      </div>
-      <div class="name">Alexa...</div>
-      <div class="price">$890</div>
-    </a>
-  </div>
+  <div class="grid" id="grid"></div>
 
   <div class="empty" id="empty" aria-live="polite">
     <p>todavía no hay nada acá</p>
@@ -323,7 +287,7 @@
 <footer>
   <div>
     <div class="brand">
-      <img src="Prakour%20logo%201.png" alt="">
+      <img src="Parkour%20logo%201.png" alt="">
     </div>
     <div class="fine">© 2026 — Montevideo, Uruguay</div>
   </div>
@@ -334,46 +298,54 @@
   </ul>
 </footer>
 
+<script src="products.js"></script>
 <script>
-  const CATEGORIES = {
-    todos: 'Lo último',
-    'big-lebowski': 'Big lebowski',
-    frases: 'Frases',
-    lotr: 'LOTR',
-    'pelis-random': 'Pelis random',
-    seinfeld: 'Seinfeld',
-    succession: 'Succession'
-  };
+(function() {
+  var grid = document.getElementById('grid');
+  var empty = document.getElementById('empty');
+  var pageTitle = document.getElementById('page-title');
+  var known = Object.keys(PARKOUR_CATEGORIES);
+  var params = new URLSearchParams(location.search);
+  var catParam = params.get('cat');
+  var category = known.indexOf(catParam) !== -1 ? catParam : 'todos';
 
-  const cards = document.querySelectorAll('.card');
-  const grid = document.getElementById('grid');
-  const empty = document.getElementById('empty');
-  const pageTitle = document.getElementById('page-title');
-  const known = new Set(Object.keys(CATEGORIES));
-  const params = new URLSearchParams(location.search);
-  const category = known.has(params.get('cat')) ? params.get('cat') : 'todos';
+  var products = PARKOUR_UTILS.getProductsByCategory(category);
+  var html = '';
 
-  let visible = 0;
-  cards.forEach(card => {
-    const show = category === 'todos' || card.dataset.category === category;
-    card.classList.toggle('hidden', !show);
-    if (show) visible++;
-  });
-
-  grid.classList.toggle('is-empty', visible === 0);
-  empty.classList.toggle('visible', visible === 0);
-  pageTitle.textContent = CATEGORIES[category];
-  if (category !== 'todos') {
-    document.title = CATEGORIES[category] + ' — Parkour';
+  for (var i = 0; i < products.length; i++) {
+    var p = products[i];
+    var imgSrc = PARKOUR_UTILS.encodeImageSrc(p.image);
+    html += '<a class="card" data-category="' + p.categorySlug + '" href="producto.html?id=' + p.id + '">' +
+      '<div class="art"><img src="' + imgSrc + '" alt=""></div>' +
+      '<div class="name">' + p.name + '</div>' +
+      '<div class="price">' + p.price + '</div>' +
+    '</a>';
   }
 
-  document.querySelectorAll('#submenu-disenos a').forEach(link => {
-    const isCurrent = (link.dataset.cat || 'todos') === category;
-    if (isCurrent) link.setAttribute('aria-current', 'page');
-    else link.removeAttribute('aria-current');
-  });
+  grid.innerHTML = html;
+
+  var visible = products.length;
+  grid.classList.toggle('is-empty', visible === 0);
+  empty.classList.toggle('visible', visible === 0);
+  pageTitle.textContent = PARKOUR_UTILS.getCategoryLabel(category);
+  if (category !== 'todos') {
+    document.title = PARKOUR_UTILS.getCategoryLabel(category) + ' — Parkour';
+  }
+
+  var submenuLinks = document.querySelectorAll('#submenu-disenos a');
+  for (var j = 0; j < submenuLinks.length; j++) {
+    var link = submenuLinks[j];
+    var linkCat = link.getAttribute('data-cat') || 'todos';
+    if (linkCat === category) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  }
+})();
 </script>
 <script src="nav.js"></script>
+<script src="welcome.js"></script>
 
 </body>
 </html>

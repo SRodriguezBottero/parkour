@@ -15,7 +15,9 @@ En el aire: [arteroto.netlify.app](https://arteroto.netlify.app)
 | `producto.html` | Ficha. Abre con `?id=` |
 | `contacto.html` | Cómo pedir |
 | `envios.html` | Montevideo e interior |
-| `nav.js` | Submenú de **Diseños** (hover, teclado, Escape) |
+| `nav.js` | Submenú de **Diseños** y hamburguesa móvil |
+| `products.js` | Datos de todos los productos (única fuente de verdad) |
+| `welcome.js` | Banner de bienvenida, sticker y easter egg |
 
 Categorías del submenú: Todos, Big lebowski, Frases, LOTR, Pelis random, Seinfeld, Succession.
 
@@ -33,35 +35,28 @@ Abrir los HTML con `file://` suele romper rutas y el JS. Mejor el servidor.
 
 ## Cómo agregar un diseño
 
-Hay que tocarlo en **tres** lugares, con el mismo `id` (ej. `crush`).
+Ahora hay **un solo lugar**: el archivo `products.js`.
 
-**1. Imagen** en la raíz del repo (el nombre del archivo puede tener espacios).
+**1. Imagen** en la raíz del repo (el nombre puede tener espacios).
 
-**2. Card** en `disenos.html` (y, si va en “Lo último”, también en `index.html`):
-
-```html
-<a class="card" data-category="frases" href="producto.html?id=crush">
-  <div class="art">
-    <img src="i_have_a_crush_on_you.png" alt="">
-  </div>
-  <div class="name">I have a crush on you</div>
-  <div class="price">$890</div>
-</a>
-```
-
-`data-category` tiene que coincidir con el del submenú: `frases`, `pelis-random`, `big-lebowski`, `lotr`, `seinfeld`, `succession`.
-
-**3. Datos** en el objeto `PRODUCTS` de `producto.html`:
+**2. Agregar al array `PRODUCTS`** en `products.js`:
 
 ```js
-crush: {
-  name: 'I have a crush on you',
+{
+  id: 'nuevo-id',           // usado en la URL: producto.html?id=nuevo-id
+  name: 'Nombre del diseño',
   price: '$890',
-  category: 'Frases',
-  image: 'i_have_a_crush_on_you.png',
-  desc: 'Dos autos, un choque y cero sutileza.'
+  categorySlug: 'frases',   // debe coincidir con el del submenú
+  categoryLabel: 'Frases',  // versión para mostrar
+  image: 'nombre_archivo.png',
+  desc: 'Descripción corta para la ficha.',
+  featured: true            // true para que aparezca en "Lo último" del home
 }
 ```
+
+Categorías disponibles: `frases`, `pelis-random`, `big-lebowski`, `lotr`, `seinfeld`, `succession`.
+
+Eso es todo. El catálogo (`disenos.html`), el home (`index.html`) y la ficha de producto (`producto.html`) leen de `products.js` automáticamente.
 
 Si la categoría todavía no tiene productos, `disenos.html?cat=...` muestra el vacío.
 
@@ -78,4 +73,4 @@ Hasta que no estén los datos reales, Instagram apunta al home de IG y WhatsApp 
 
 ## Publicar
 
-Netlify, deploy de la carpeta (drag & drop o git). Subí **todos** los HTML, `nav.js` y las imágenes. No hay `package.json` ni paso de build.
+Netlify, deploy de la carpeta (drag & drop o git). Subí **todos** los HTML, los JS (`nav.js`, `products.js`, `welcome.js`) y las imágenes. No hay `package.json` ni paso de build.
