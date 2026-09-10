@@ -164,11 +164,11 @@
     sticker.setAttribute('aria-label', 'Mensaje de bienvenida');
 
     var messages = [
-      'Ta' bien si no comprás nada, igual te queremos.',
-      'Remeras: porque los tatuajes duelen.',
-      'El algoritmo te trajo, el diseño te queda.',
-      'Somos 2 amig@s con un estampador y un sueño.',
-      'Si no te gusta ninguna, inventamos una para vos (mentira).'
+      "Ta' bien si no comprás nada, igual te queremos.",
+      "Remeras: porque los tatuajes duelen.",
+      "El algoritmo te trajo, el diseño te queda.",
+      "Somos 2 amig@s con un estampador y un sueño.",
+      "Si no te gusta ninguna, inventamos una para vos (mentira)."
     ];
     var randomMsg = messages[Math.floor(Math.random() * messages.length)];
 
