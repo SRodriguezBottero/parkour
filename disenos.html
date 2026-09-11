@@ -164,6 +164,21 @@
     margin-bottom:8px;
   }
   .empty span{color:#c9c5ba; font-size:16px;}
+  .btn-secret{
+    display:inline-block;
+    margin-top:24px;
+    background:#a83a26;
+    color:var(--bone);
+    padding:16px 28px;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:16px;
+    text-decoration:none;
+    clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
+    transform:rotate(1deg);
+    transition:background 0.2s;
+  }
+  .btn-secret:hover{background:#8f311f;}
   .card{
     background:var(--black);
     color:var(--bone);
@@ -281,6 +296,7 @@
   <div class="empty" id="empty" aria-live="polite">
     <p>todavía no hay nada acá</p>
     <span>Volvé pronto — o mirá otra categoría.</span>
+    <a id="secret-stock" class="btn-secret" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer" style="display:none;">Desbloquear stock secreto</a>
   </div>
 </main>
 
@@ -310,11 +326,7 @@
   var category = known.indexOf(catParam) !== -1 ? catParam : 'todos';
 
   var products = PARKOUR_UTILS.getProductsByCategory(category);
-
-  if (products.length === 0 && category !== 'todos') {
-    window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-    return;
-  }
+  var secretBtn = document.getElementById('secret-stock');
 
   var html = '';
 
@@ -331,8 +343,12 @@
   grid.innerHTML = html;
 
   var visible = products.length;
-  grid.classList.toggle('is-empty', visible === 0);
-  empty.classList.toggle('visible', visible === 0);
+  var showEmpty = visible === 0;
+  var showSecretBtn = showEmpty && category !== 'todos';
+  
+  grid.classList.toggle('is-empty', showEmpty);
+  empty.classList.toggle('visible', showEmpty);
+  if (secretBtn) secretBtn.style.display = showSecretBtn ? 'inline-block' : 'none';
   pageTitle.textContent = PARKOUR_UTILS.getCategoryLabel(category);
   if (category !== 'todos') {
     document.title = PARKOUR_UTILS.getCategoryLabel(category) + ' — Parkour';
