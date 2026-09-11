@@ -176,6 +176,21 @@
     overlay.classList.toggle('is-visible', open);
     document.body.style.overflow = open ? 'hidden' : '';
     setPageInert(open && isMobileView());
+    
+    if (!open) {
+      resetSubmenu();
+    }
+  }
+
+  function resetSubmenu() {
+    var submenuItem = nav.querySelector('.has-submenu');
+    if (!submenuItem) return;
+    var submenuTrigger = submenuItem.querySelector(':scope > a');
+    var submenuMenu = submenuItem.querySelector('.submenu');
+    submenuItem.classList.remove('is-open');
+    submenuItem.classList.remove('is-dismissed');
+    if (submenuTrigger) submenuTrigger.setAttribute('aria-expanded', 'false');
+    if (submenuMenu) submenuMenu.setAttribute('hidden', '');
   }
 
   function getDrawerFocusable() {
@@ -200,12 +215,13 @@
   });
 
   function autoExpandSubmenu() {
+    if (!isMobileView()) return;
     if (item && !item.classList.contains('is-open')) {
-      var trigger = item.querySelector(':scope > a');
-      var menu = item.querySelector('.submenu');
+      var submenuTrigger = item.querySelector(':scope > a');
+      var submenuMenu = item.querySelector('.submenu');
       item.classList.add('is-open');
-      if (trigger) trigger.setAttribute('aria-expanded', 'true');
-      if (menu) menu.removeAttribute('hidden');
+      if (submenuTrigger) submenuTrigger.setAttribute('aria-expanded', 'true');
+      if (submenuMenu) submenuMenu.removeAttribute('hidden');
     }
   }
 
