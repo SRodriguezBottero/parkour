@@ -248,15 +248,117 @@
     });
   }
 
+  function createSound() {
+    var AUTOPLAY_KEY = 'parkour_sound_autoplayed';
+    var file = location.pathname.split('/').pop();
+    var isHome = file === '' || file === 'index.html';
+    if (!isHome) return;
+
+    var audio = new Audio('parkour-parkour.mp3');
+    audio.preload = 'auto';
+
+    var idleLabel = 'dale play';
+    var playingLabel = 'basta';
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'parkour-sound-btn';
+    btn.setAttribute('aria-pressed', 'false');
+    btn.textContent = idleLabel;
+    btn.setAttribute('aria-label', 'Reproducir sonido Parkour');
+
+    var style = document.createElement('style');
+    style.id = 'parkour-sound-style';
+    style.textContent =
+      '#parkour-sound-btn {' +
+        'position: absolute;' +
+        'top: 18px;' +
+        'left: calc(5vw + 108px);' +
+        'z-index: 22;' +
+        'background: #D8A73D;' +
+        'color: #121212;' +
+        'border: none;' +
+        'padding: 8px 14px;' +
+        'font-family: "Permanent Marker", cursive;' +
+        'font-size: 16px;' +
+        'line-height: 1.15;' +
+        'cursor: pointer;' +
+        'transform: rotate(-8deg);' +
+        'white-space: nowrap;' +
+      '}' +
+      '#parkour-sound-btn:hover { background: #c49636; }' +
+      '#parkour-sound-btn:focus-visible {' +
+        'outline: 2px solid #F3EFE6;' +
+        'outline-offset: 3px;' +
+      '}' +
+      '@media (max-width: 780px) {' +
+        '#parkour-sound-btn {' +
+          'top: 10px;' +
+          'left: 5vw;' +
+          'font-size: 14px;' +
+          'padding: 6px 12px;' +
+        '}' +
+      '}' +
+      '@media (prefers-reduced-motion: reduce) {' +
+        '#parkour-sound-btn { transform: none; }' +
+      '}';
+    document.head.appendChild(style);
+
+    var nav = document.querySelector('nav');
+    if (nav) nav.appendChild(btn);
+    else document.body.appendChild(btn);
+
+    function setPlaying(playing) {
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      if (playing) {
+        btn.textContent = playingLabel;
+        btn.setAttribute('aria-label', 'Silenciar sonido');
+      } else {
+        btn.textContent = idleLabel;
+        btn.setAttribute('aria-label', 'Reproducir sonido Parkour');
+      }
+    }
+
+    function play() {
+      var attempt = audio.play();
+      if (attempt && attempt.catch) attempt.catch(function () {});
+    }
+
+    function stop() {
+      audio.pause();
+      audio.currentTime = 0;
+      setPlaying(false);
+    }
+
+    btn.addEventListener('click', function () {
+      if (audio.paused) play();
+      else stop();
+    });
+
+    audio.addEventListener('play', function () {
+      setPlaying(true);
+      sessionStorage.setItem(AUTOPLAY_KEY, '1');
+    });
+    audio.addEventListener('ended', function () {
+      setPlaying(false);
+    });
+
+    if (!prefersReducedMotion && !sessionStorage.getItem(AUTOPLAY_KEY)) {
+      play();
+    }
+  }
+
   consoleEasterEgg();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       createBanner();
       createSticker();
+      createSound();
     });
   } else {
     createBanner();
     createSticker();
+    createSound();
   }
 })();
