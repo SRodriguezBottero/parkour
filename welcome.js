@@ -2,7 +2,6 @@
   'use strict';
 
   var BANNER_KEY = 'parkour_welcome_seen';
-  var STICKER_KEY = 'parkour_sticker_dismissed';
 
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -156,7 +155,8 @@
   }
 
   function createSticker() {
-    if (localStorage.getItem(STICKER_KEY)) return;
+    var stickerKey = 'parkour_sticker_' + location.pathname;
+    if (sessionStorage.getItem(stickerKey)) return;
 
     var sticker = document.createElement('div');
     sticker.id = 'parkour-sticker';
@@ -243,7 +243,7 @@
 
     var closeBtn = sticker.querySelector('.parkour-sticker-close');
     closeBtn.addEventListener('click', function() {
-      localStorage.setItem(STICKER_KEY, '1');
+      sessionStorage.setItem(stickerKey, '1');
       sticker.remove();
     });
   }
