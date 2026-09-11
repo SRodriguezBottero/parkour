@@ -310,6 +310,12 @@
   var category = known.indexOf(catParam) !== -1 ? catParam : 'todos';
 
   var products = PARKOUR_UTILS.getProductsByCategory(category);
+
+  if (products.length === 0 && category !== 'todos') {
+    window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    return;
+  }
+
   var html = '';
 
   for (var i = 0; i < products.length; i++) {
