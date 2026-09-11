@@ -67,7 +67,19 @@
           'padding: 18px 0;' +
           'font-size: 18px;' +
         '}' +
-        'nav .has-submenu > a::after { display: none; }' +
+        'nav .has-submenu > a {' +
+          'display: flex;' +
+          'justify-content: space-between;' +
+          'align-items: center;' +
+        '}' +
+        'nav .has-submenu > a::after {' +
+          'display: block;' +
+          'margin-left: auto;' +
+          'transition: transform 0.2s ease;' +
+        '}' +
+        'nav .has-submenu.is-open > a::after {' +
+          'transform: rotate(180deg);' +
+        '}' +
         'nav .submenu {' +
           'position: static;' +
           'background: transparent;' +
@@ -181,10 +193,21 @@
   hamburger.addEventListener('click', function() {
     setMobileMenuOpen(!mobileMenuOpen);
     if (mobileMenuOpen && navUl) {
+      autoExpandSubmenu();
       var firstLink = navUl.querySelector('a');
       if (firstLink) firstLink.focus();
     }
   });
+
+  function autoExpandSubmenu() {
+    if (item && !item.classList.contains('is-open')) {
+      var trigger = item.querySelector(':scope > a');
+      var menu = item.querySelector('.submenu');
+      item.classList.add('is-open');
+      if (trigger) trigger.setAttribute('aria-expanded', 'true');
+      if (menu) menu.removeAttribute('hidden');
+    }
+  }
 
   overlay.addEventListener('click', function() {
     setMobileMenuOpen(false);
@@ -244,32 +267,29 @@
 
   setOpen(false);
 
-  if (touch) {
-    trigger.addEventListener('click', function (e) {
-      if (!isOpen()) {
-        e.preventDefault();
-        clearDismissed();
-        setOpen(true);
-      }
-    });
-  } else {
-    item.addEventListener('mouseenter', function () {
-      if (isMobileView()) return;
-      if (item.classList.contains('is-dismissed')) return;
-      setOpen(true);
-    });
-    item.addEventListener('mouseleave', function () {
-      if (isMobileView()) return;
-      clearDismissed();
-      if (!item.contains(document.activeElement)) setOpen(false);
-    });
-  }
+  item.addEventListener('mouseenter', function () {
+    if (isMobileView()) return;
+    if (touch) return;
+    if (item.classList.contains('is-dismissed')) return;
+    setOpen(true);
+  });
+  
+  item.addEventListener('mouseleave', function () {
+    if (isMobileView()) return;
+    if (touch) return;
+    clearDismissed();
+    if (!item.contains(document.activeElement)) setOpen(false);
+  });
 
   trigger.addEventListener('click', function(e) {
     if (isMobileView()) {
       e.preventDefault();
       clearDismissed();
       setOpen(!isOpen());
+    } else if (touch && !isOpen()) {
+      e.preventDefault();
+      clearDismissed();
+      setOpen(true);
     }
   });
 
