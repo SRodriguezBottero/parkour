@@ -126,6 +126,11 @@
     gap:56px;
     align-items:start;
   }
+  .product-gallery{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
   .product-art{
     background:#0c0b0a;
     border:1px solid var(--line);
@@ -143,6 +148,44 @@
   .product-art img{
     width:100%;
     height:auto;
+    display:block;
+  }
+
+  .gallery-thumbs{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    padding-left:4px;
+  }
+  .gallery-thumbs.single{
+    display:none;
+  }
+  .gallery-thumb{
+    width:72px;
+    height:72px;
+    background:#0c0b0a;
+    border:2px solid var(--line);
+    padding:4px;
+    cursor:pointer;
+    opacity:0.65;
+    transition:opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .gallery-thumb:hover{
+    opacity:0.9;
+    transform:translateY(-2px);
+  }
+  .gallery-thumb:focus-visible{
+    outline:2px solid var(--mustard);
+    outline-offset:3px;
+  }
+  .gallery-thumb[aria-selected="true"]{
+    border-color:var(--mustard);
+    opacity:1;
+  }
+  .gallery-thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
     display:block;
   }
   .product-copy{
@@ -292,6 +335,14 @@
     .product{grid-template-columns:1fr; gap:36px;}
     .product-art{transform:none; animation-name:rise;}
     .product-art:hover{transform:translateY(-6px);}
+    .gallery-thumbs{
+      justify-content:center;
+      padding-left:0;
+    }
+    .gallery-thumb{
+      width:64px;
+      height:64px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -303,6 +354,12 @@
     }
     .product-art{transform:rotate(-2deg);}
     .product-art:hover{transform:rotate(-2deg); box-shadow: 18px 18px 0 rgba(216,167,61,0.15);}
+    .gallery-thumb{
+      transition:none !important;
+    }
+    .gallery-thumb:hover{
+      transform:none;
+    }
   }
 </style>
 </head>
@@ -336,11 +393,14 @@
   <a class="back" href="disenos.html">← Volver a diseños</a>
 
   <div class="product" id="product">
-    <div class="product-art" style="position:relative;">
-      <img id="p-img" src="" alt="">
-      <button type="button" class="parkour-fav-btn" id="product-fav-btn" aria-label="Agregar a favoritos" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </button>
+    <div class="product-gallery">
+      <div class="product-art" style="position:relative;">
+        <img id="p-img" src="" alt="">
+        <button type="button" class="parkour-fav-btn" id="product-fav-btn" aria-label="Agregar a favoritos" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+      <div class="gallery-thumbs" id="gallery-thumbs" role="listbox" aria-label="Imágenes del producto"></div>
     </div>
     <div class="product-copy">
       <span class="eyebrow" id="p-cat"></span>
@@ -404,9 +464,93 @@
     missingEl.classList.add('visible');
     document.title = 'No encontrado — Parkour';
   } else {
-    var imgSrc = PARKOUR_UTILS.encodeImageSrc(product.image);
-    document.getElementById('p-img').src = imgSrc;
-    document.getElementById('p-img').alt = product.name + ' — diseño de remera';
+    var mainImg = document.getElementById('p-img');
+    var thumbsContainer = document.getElementById('gallery-thumbs');
+
+    var allImages = [{ src: product.image, label: 'Diseño' }];
+    if (product.gallery && product.gallery.length > 0) {
+      for (var g = 0; g < product.gallery.length; g++) {
+        allImages.push({ src: product.gallery[g], label: 'Mockup ' + (g + 1) });
+      }
+    }
+
+    var currentIndex = 0;
+
+    function setActiveImage(index) {
+      currentIndex = index;
+      var imgSrc = PARKOUR_UTILS.encodeImageSrc(allImages[index].src);
+      mainImg.src = imgSrc;
+      mainImg.alt = product.name + ' — ' + allImages[index].label;
+
+      var thumbs = thumbsContainer.querySelectorAll('.gallery-thumb');
+      for (var t = 0; t < thumbs.length; t++) {
+        thumbs[t].setAttribute('aria-selected', t === index ? 'true' : 'false');
+        thumbs[t].setAttribute('tabindex', t === index ? '0' : '-1');
+      }
+    }
+
+    if (allImages.length === 1) {
+      thumbsContainer.classList.add('single');
+    }
+
+    for (var i = 0; i < allImages.length; i++) {
+      var thumb = document.createElement('button');
+      thumb.type = 'button';
+      thumb.className = 'gallery-thumb';
+      thumb.setAttribute('role', 'option');
+      thumb.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      thumb.setAttribute('tabindex', i === 0 ? '0' : '-1');
+      thumb.setAttribute('data-index', i);
+      thumb.setAttribute('aria-label', allImages[i].label);
+
+      var thumbImg = document.createElement('img');
+      thumbImg.src = PARKOUR_UTILS.encodeImageSrc(allImages[i].src);
+      thumbImg.alt = '';
+      thumbImg.setAttribute('aria-hidden', 'true');
+      thumb.appendChild(thumbImg);
+
+      thumb.addEventListener('click', function(e) {
+        var idx = parseInt(this.getAttribute('data-index'), 10);
+        setActiveImage(idx);
+        this.focus();
+      });
+
+      thumbsContainer.appendChild(thumb);
+    }
+
+    thumbsContainer.addEventListener('keydown', function(e) {
+      var thumbs = thumbsContainer.querySelectorAll('.gallery-thumb');
+      var len = thumbs.length;
+      if (len <= 1) return;
+
+      var handled = false;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        var next = (currentIndex + 1) % len;
+        setActiveImage(next);
+        thumbs[next].focus();
+        handled = true;
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        var prev = (currentIndex - 1 + len) % len;
+        setActiveImage(prev);
+        thumbs[prev].focus();
+        handled = true;
+      } else if (e.key === 'Home') {
+        setActiveImage(0);
+        thumbs[0].focus();
+        handled = true;
+      } else if (e.key === 'End') {
+        setActiveImage(len - 1);
+        thumbs[len - 1].focus();
+        handled = true;
+      }
+
+      if (handled) {
+        e.preventDefault();
+      }
+    });
+
+    setActiveImage(0);
+
     document.getElementById('p-cat').textContent = product.categoryLabel;
     document.getElementById('p-name').textContent = product.name;
     document.getElementById('p-price').textContent = product.price;
