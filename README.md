@@ -17,6 +17,7 @@ En el aire: [arteroto.netlify.app](https://arteroto.netlify.app)
 | `envios.html` | Montevideo e interior |
 | `nav.js` | Submenú de **Diseños** y hamburguesa móvil |
 | `products.js` | Datos de todos los productos (única fuente de verdad) |
+| `pedido.js` | Favoritos (❤️) y bolsa de pedido (🛍️) |
 | `welcome.js` | Banner de bienvenida, sticker y easter egg |
 
 Categorías del submenú: Todos, Big lebowski, Frases, LOTR, Pelis random, Seinfeld, Succession.
@@ -59,6 +60,24 @@ Categorías disponibles: `frases`, `pelis-random`, `big-lebowski`, `lotr`, `sein
 Eso es todo. El catálogo (`disenos.html`), el home (`index.html`) y la ficha de producto (`producto.html`) leen de `products.js` automáticamente.
 
 Si la categoría todavía no tiene productos, `disenos.html?cat=...` muestra el vacío.
+
+## Favoritos y Pedido
+
+Parkour tiene un sistema de favoritos y bolsa de pedido que funciona con localStorage (sin backend).
+
+### Favoritos (❤️)
+- Click en el corazón de cualquier producto para agregarlo a favoritos
+- Los favoritos se guardan en el navegador
+- Click en el ícono de corazón en la navegación para ver tus favoritos
+
+### Bolsa de pedido (🛍️)
+- En la página de producto, elegí talle y hacé click en "Agregar al pedido"
+- Click en el ícono de bolsa en la navegación para ver tu pedido
+- "Pedir por WhatsApp" arma un mensaje con todos los diseños y talles
+- Si WhatsApp no está configurado, te lleva a Contacto con el mensaje armado
+
+### Íconos de navegación
+En desktop aparecen en la barra de navegación. En mobile aparecen fijos en la parte inferior de la pantalla.
 
 ## Pedidos (Instagram / WhatsApp)
 
