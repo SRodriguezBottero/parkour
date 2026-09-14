@@ -336,8 +336,11 @@
   <a class="back" href="disenos.html">← Volver a diseños</a>
 
   <div class="product" id="product">
-    <div class="product-art">
+    <div class="product-art" style="position:relative;">
       <img id="p-img" src="" alt="">
+      <button type="button" class="parkour-fav-btn" id="product-fav-btn" aria-label="Agregar a favoritos" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
     </div>
     <div class="product-copy">
       <span class="eyebrow" id="p-cat"></span>
@@ -356,10 +359,13 @@
       </fieldset>
 
       <div class="actions">
-        <a class="btn" id="p-cta" href="contacto.html">Consultar por Instagram</a>
+        <button type="button" class="parkour-add-bag-btn" id="add-to-bag-btn">Agregar al pedido</button>
         <span class="hint">tirada chica</span>
       </div>
-      <p class="note">Sin carrito por ahora: elegís diseño y talle, y te respondemos por Instagram o WhatsApp.</p>
+      <div class="actions" style="margin-top:16px;">
+        <a class="btn" id="p-cta" href="contacto.html">Consultar por Instagram</a>
+      </div>
+      <p class="note">Agregá al pedido y coordinamos por WhatsApp, o escribinos directo por Instagram.</p>
     </div>
   </div>
 
@@ -385,6 +391,7 @@
 </footer>
 
 <script src="products.js"></script>
+<script src="pedido.js"></script>
 <script>
 (function() {
   var id = new URLSearchParams(location.search).get('id');
@@ -416,17 +423,65 @@
     if (ogUrl) ogUrl.setAttribute('content', 'https://arteroto.netlify.app/producto.html?id=' + id);
 
     var cta = document.getElementById('p-cta');
-    function updateCta() {
+    function getSelectedSize() {
       var sizeInput = document.querySelector('input[name="size"]:checked');
-      var size = sizeInput ? sizeInput.value : 'M';
+      return sizeInput ? sizeInput.value : 'M';
+    }
+
+    function updateCta() {
+      var size = getSelectedSize();
       var text = encodeURIComponent('Hola! Quiero la remera "' + product.name + '" talle ' + size);
       cta.href = 'contacto.html?msg=' + text + '&product=' + encodeURIComponent(product.name) + '&size=' + size;
     }
+
     var sizeInputs = document.querySelectorAll('input[name="size"]');
     for (var i = 0; i < sizeInputs.length; i++) {
       sizeInputs[i].addEventListener('change', updateCta);
     }
     updateCta();
+
+    var favBtn = document.getElementById('product-fav-btn');
+    if (favBtn && window.PARKOUR_PEDIDO) {
+      var isFav = PARKOUR_PEDIDO.isFavorite(id);
+      favBtn.classList.toggle('is-active', isFav);
+      favBtn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
+      favBtn.setAttribute('aria-label', isFav ? 'Quitar de favoritos' : 'Agregar a favoritos');
+
+      favBtn.addEventListener('click', function() {
+        var isNowFav = PARKOUR_PEDIDO.toggleFavorite(id);
+        favBtn.classList.toggle('is-active', isNowFav);
+        favBtn.setAttribute('aria-pressed', isNowFav ? 'true' : 'false');
+        favBtn.setAttribute('aria-label', isNowFav ? 'Quitar de favoritos' : 'Agregar a favoritos');
+      });
+    }
+
+    var addToBagBtn = document.getElementById('add-to-bag-btn');
+    if (addToBagBtn && window.PARKOUR_PEDIDO) {
+      addToBagBtn.addEventListener('click', function() {
+        var size = getSelectedSize();
+        var added = PARKOUR_PEDIDO.addToBag({
+          id: id,
+          name: product.name,
+          size: size,
+          price: product.price,
+          image: product.image
+        });
+
+        if (added) {
+          addToBagBtn.textContent = '¡Agregado!';
+          addToBagBtn.classList.add('is-added');
+          setTimeout(function() {
+            addToBagBtn.textContent = 'Agregar al pedido';
+            addToBagBtn.classList.remove('is-added');
+          }, 2000);
+        } else {
+          addToBagBtn.textContent = 'Ya está en tu pedido';
+          setTimeout(function() {
+            addToBagBtn.textContent = 'Agregar al pedido';
+          }, 2000);
+        }
+      });
+    }
   }
 })();
 </script>
