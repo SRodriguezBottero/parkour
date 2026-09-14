@@ -69,15 +69,17 @@ Si hay más de una imagen, se muestran miniaturas debajo del visor principal. La
 1. Poné las imágenes en `mockups/` (ej: `mockups/mi-mockup.png`)
 2. Agregá las rutas al array `gallery` del producto en `products.js`
 
+**Estilo preferido:** flat-lay (remera negra sobre superficie texturada oscura + círculo mostaza de acento). Ver `mockups/alexa-flat.png` como referencia. No usar fotos on-body.
+
 Ejemplo con mockup:
 
 ```js
 {
-  id: 'crush',
-  name: 'I have a crush on you',
+  id: 'alexa',
+  name: 'Alexa...',
   // ...
-  image: 'i_have_a_crush_on_you.png',
-  gallery: ['mockups/crush-body.png']
+  image: 'alexa.png',
+  gallery: ['mockups/alexa-flat.png']
 }
 ```
 
