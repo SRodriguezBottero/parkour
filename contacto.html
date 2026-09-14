@@ -257,11 +257,12 @@
   const WHATSAPP_URL = 'https://wa.me/'; // ej: https://wa.me/59899123456
 
   const params = new URLSearchParams(location.search);
+  // get() already decodes; decodeURIComponent() throws on names like "100% algodón"
   const msg = params.get('msg') || 'Hola! Quiero una remera Parkour.';
   const product = params.get('product');
   const size = params.get('size');
 
-  document.getElementById('draft-text').textContent = decodeURIComponent(msg);
+  document.getElementById('draft-text').textContent = msg;
 
   document.querySelectorAll('#ig-btn, #nav-ig, #ft-ig').forEach(a => {
     a.href = INSTAGRAM_URL;
@@ -269,7 +270,7 @@
 
   const wa = document.getElementById('wa-btn');
   wa.href = WHATSAPP_URL.includes('wa.me/') && WHATSAPP_URL.length > 'https://wa.me/'.length
-    ? `${WHATSAPP_URL}?text=${encodeURIComponent(decodeURIComponent(msg))}`
+    ? `${WHATSAPP_URL}?text=${encodeURIComponent(msg)}`
     : WHATSAPP_URL;
 
   if (product && size) {
@@ -277,6 +278,8 @@
       `Vas por “${product}” talle ${size}. Mandanos el mensaje y lo coordinamos.`;
   }
 </script>
+<script src="products.js"></script>
+<script src="pedido.js"></script>
 <script src="nav.js"></script>
 <script src="welcome.js"></script>
 
