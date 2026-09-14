@@ -265,7 +265,7 @@
     btn.id = 'parkour-sound-btn';
     btn.setAttribute('aria-pressed', 'false');
     btn.textContent = idleLabel;
-    btn.setAttribute('aria-label', 'Reproducir sonido Parkour');
+    btn.setAttribute('aria-label', 'dale play — Reproducir sonido Parkour');
 
     var style = document.createElement('style');
     style.id = 'parkour-sound-style';
@@ -312,10 +312,10 @@
       btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
       if (playing) {
         btn.textContent = playingLabel;
-        btn.setAttribute('aria-label', 'Silenciar sonido');
+        btn.setAttribute('aria-label', 'basta — Silenciar sonido');
       } else {
         btn.textContent = idleLabel;
-        btn.setAttribute('aria-label', 'Reproducir sonido Parkour');
+        btn.setAttribute('aria-label', 'dale play — Reproducir sonido Parkour');
       }
     }
 

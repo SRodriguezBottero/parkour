@@ -100,6 +100,11 @@
     var style = document.createElement('style');
     style.id = 'parkour-pedido-styles';
     style.textContent = 
+      '.parkour-nav-icons-item {' +
+        'list-style: none;' +
+        'display: flex;' +
+        'align-items: center;' +
+      '}' +
       '.parkour-nav-icons {' +
         'display: flex;' +
         'align-items: center;' +
@@ -465,6 +470,7 @@
   }
 
   var navIconsContainer = null;
+  var navIconsListItem = null;
   var favCountEl = null;
   var bagCountEl = null;
   var favPanel = null;
@@ -479,6 +485,10 @@
 
     navIconsContainer = document.createElement('div');
     navIconsContainer.className = 'parkour-nav-icons';
+    
+    navIconsListItem = document.createElement('li');
+    navIconsListItem.className = 'parkour-nav-icons-item';
+    navIconsListItem.appendChild(navIconsContainer);
 
     var heartSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
     var bagSvg = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>';
@@ -503,7 +513,7 @@
     if (window.matchMedia('(max-width: 780px)').matches) {
       document.body.appendChild(navIconsContainer);
     } else {
-      navUl.appendChild(navIconsContainer);
+      navUl.appendChild(navIconsListItem);
     }
 
     window.addEventListener('resize', repositionNavIcons);
@@ -525,10 +535,16 @@
     var isInBody = navIconsContainer.parentNode === document.body;
 
     if (isMobile && !isInBody) {
+      if (navIconsListItem && navIconsListItem.parentNode) {
+        navIconsListItem.removeChild(navIconsContainer);
+      }
       document.body.appendChild(navIconsContainer);
     } else if (!isMobile && isInBody) {
       var navUl = document.querySelector('nav > ul');
-      if (navUl) navUl.appendChild(navIconsContainer);
+      if (navUl && navIconsListItem) {
+        navIconsListItem.appendChild(navIconsContainer);
+        navUl.appendChild(navIconsListItem);
+      }
     }
   }
 
