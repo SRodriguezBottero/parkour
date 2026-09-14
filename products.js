@@ -19,6 +19,7 @@
       categorySlug: 'frases',
       categoryLabel: 'Frases',
       image: 'i_have_a_crush_on_you.png',
+      gallery: ['mockups/crush-body.png'],
       desc: 'Dos autos, un choque y cero sutileza. Diseño propio, print en remera, tirada chica.',
       featured: true
     },
@@ -29,6 +30,7 @@
       categorySlug: 'pelis-random',
       categoryLabel: 'Pelis random',
       image: 'soy bonito no Perfecto.png',
+      gallery: ['mockups/soy-body.png'],
       desc: 'Autoestima con humor. Para quienes saben que bonito no es lo mismo que perfecto.',
       featured: true
     },
@@ -59,6 +61,7 @@
       categorySlug: 'frases',
       categoryLabel: 'Frases',
       image: 'alexa.png',
+      gallery: ['mockups/alexa-flat.png'],
       desc: 'Cuando la conversación se pone interesante. Diseño propio, tirada limitada.',
       featured: true
     }
