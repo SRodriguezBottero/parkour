@@ -50,37 +50,8 @@ Ahora hay **un solo lugar**: el archivo `products.js`.
   categorySlug: 'frases',   // debe coincidir con el del submenú
   categoryLabel: 'Frases',  // versión para mostrar
   image: 'nombre_archivo.png',
-  gallery: ['mockups/mockup1.png', 'mockups/mockup2.png'],  // opcional
   desc: 'Descripción corta para la ficha.',
   featured: true            // true para que aparezca en "Lo último" del home
-}
-```
-
-## Galería de imágenes
-
-Cada producto puede tener múltiples imágenes en la ficha (`producto.html`):
-
-- **`image`** (obligatoria): arte principal del diseño
-- **`gallery`** (opcional): array de rutas a mockups o fotos adicionales
-
-Si hay más de una imagen, se muestran miniaturas debajo del visor principal. Las miniaturas son navegables por teclado (flechas, Home/End). Si solo hay una imagen, no se muestran miniaturas.
-
-**Agregar mockups:**
-
-1. Poné las imágenes en `mockups/` (ej: `mockups/mi-mockup.png`)
-2. Agregá las rutas al array `gallery` del producto en `products.js`
-
-**Estilo preferido:** flat-lay (remera negra sobre superficie texturada oscura + círculo mostaza de acento). Ver `mockups/alexa-flat.png` como referencia. No usar fotos on-body.
-
-Ejemplo con mockup:
-
-```js
-{
-  id: 'alexa',
-  name: 'Alexa...',
-  // ...
-  image: 'alexa.png',
-  gallery: ['mockups/alexa-flat.png']
 }
 ```
 

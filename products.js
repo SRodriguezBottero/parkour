@@ -59,7 +59,6 @@
       categorySlug: 'frases',
       categoryLabel: 'Frases',
       image: 'alexa.png',
-      gallery: ['mockups/alexa-flat.png'],
       desc: 'Cuando la conversación se pone interesante. Diseño propio, tirada limitada.',
       featured: true
     }
