@@ -90,6 +90,17 @@ const WHATSAPP_URL = 'https://wa.me/'; // ej: https://wa.me/59899123456
 
 Hasta que no estén los datos reales, Instagram apunta al home de IG y WhatsApp no tiene número.
 
+## Tests de regresión
+
+El sitio se sigue sirviendo como HTML estático, sin build. Para correr la suite:
+
+```bash
+npm install
+npm test
+```
+
+Cubre catálogo, ficha (imagen única, sin galería, talle M por defecto, `?id=` vacío o con params extra, XXL/XXXL, primer `id` si se repite), contacto (`%` en el mensaje, WhatsApp placeholder sin `?text=`, lead vs draft, size/msg vacíos), favoritos/bolsa (unicidad id+talle, hidratación de badge y panel desde localStorage, snapshot que no se pisa, paneles vacíos, links a ficha), nav móvil y desktop (hover, Escape con foco o cerrado, click afuera, segundo tap en touch, foco de teclado, overlay, trap sin links hidden, ignore hover en mobile), el sticker por pathname (incluye `/`), el footer GIF decorativo, Instagram `noopener`, y los arreglos de a11y de los íconos y el botón de sonido.
+
 ## Publicar
 
-Netlify, deploy de la carpeta (drag & drop o git). Subí **todos** los HTML, los JS (`nav.js`, `products.js`, `welcome.js`) y las imágenes. No hay `package.json` ni paso de build.
+Netlify, deploy de la carpeta (drag & drop o git). Subí **todos** los HTML, los JS (`nav.js`, `products.js`, `pedido.js`, `welcome.js`) y las imágenes. El `package.json` es solo para tests; no hace falta para publicar.
