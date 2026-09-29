@@ -90,6 +90,17 @@ const WHATSAPP_URL = 'https://wa.me/'; // ej: https://wa.me/59899123456
 
 Hasta que no estén los datos reales, Instagram apunta al home de IG y WhatsApp no tiene número.
 
+## Tests de regresión
+
+El sitio se sigue sirviendo como HTML estático, sin build. Para correr la suite:
+
+```bash
+npm install
+npm test
+```
+
+Cubre catálogo, ficha (imagen única, sin galería, talle M por defecto, `?id=` vacío o con params extra, hash/`cat` al lado del id, id solo en el hash, trailing slash, letras percent-encoded en `id`/`cat`, `?size=` ignorado en la ficha, cambio de radio sin agregar a la bolsa, hyphen encoded, espacio/`+` en lugar del hyphen, id en mayúscula, trailing space, XXL/XXXL/S/L, primer `id`/`cat` si se repite, `?ID=`/`?CAT=` no cargan, 404 no muta bolsa, CTA ficha → `contacto.html` incluso sin `pedido.js` y sin `target=_blank`, radios S–XXXL, OG title/desc/image de todos los productos, alt de ficha, `encodeImageSrc` en catálogo/home/ficha, `is-added` en el primer click, `data-category` de las cards, apostrofe de lick en el catálogo), contacto (`%` y `&` en el mensaje, `%` malformado, HTML de `?msg=`/`product` como texto, WhatsApp placeholder sin `?text=`, lead vs draft, product+size sin msg, primer `msg`/`product`/`size` si se repite, `+` como espacio, keys en mayúscula, hash después de `msg`, hash-only `#msg=`/`#product=` ignorado, IG hrefs con `target=_blank` + `rel` después de reescribir), favoritos/bolsa (unicidad id+talle case-sensitive, hidratación, snapshot de 5 campos first-write-wins, JSON vacío/`false`, `#` en thumbs, API sin nav, handoff en envíos, `id` no primero en el card, corazones sincronizados, quitar último renglón, bolsa → contacto, nota WA a `contacto.html`, foco al cerrar el panel, `bag-changed` no dispara en el duplicado, badges `aria-live`), nav móvil y desktop (hover, Escape, overlay cerrado no abre, click-outside after Escape, drawer sin submenu, resize a mobile no abre, resize móvil no cierra, focusin con submenu dismissed, hamburger cierra inert, hamburger `type=button` + `aria-controls`, Diseños `aria-haspopup`/`aria-controls`), integridad del catálogo (archivos de imagen, ids URL-safe y sin padding, `categoryLabel` por slug, slugs case-sensitive, submenu y categorías vacías en todas las páginas, desc/precio, `pelis%2Drandom`, `#` múltiples en encodeImageSrc), el sticker por pathname (incluye `/` y fichas con `?id=` distinto, copy allowlist), persistencia banner vs sonido (click de play, rewind, src del mp3, autoplay bloqueado), el footer GIF decorativo y el mp3, logo a `index.html`, Nosotr@s → `#about`, `lang=es`, Instagram `noopener`, y los arreglos de a11y de los íconos y el botón de sonido.
+
 ## Publicar
 
-Netlify, deploy de la carpeta (drag & drop o git). Subí **todos** los HTML, los JS (`nav.js`, `products.js`, `welcome.js`) y las imágenes. No hay `package.json` ni paso de build.
+Netlify, deploy de la carpeta (drag & drop o git). Subí **todos** los HTML, los JS (`nav.js`, `products.js`, `pedido.js`, `welcome.js`) y las imágenes. El `package.json` es solo para tests; no hace falta para publicar.
