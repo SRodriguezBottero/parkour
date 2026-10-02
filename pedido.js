@@ -878,7 +878,7 @@
   }
 
   function initProductCards() {
-    var cards = document.querySelectorAll('.card[href*="producto.html?id="]');
+    var cards = document.querySelectorAll('.card[href*="producto.html"]');
     for (var i = 0; i < cards.length; i++) {
       var card = cards[i];
       var href = card.getAttribute('href');
@@ -894,7 +894,7 @@
       }
     }
 
-    var homeCards = document.querySelectorAll('.tee-card[href*="producto.html?id="]');
+    var homeCards = document.querySelectorAll('.tee-card[href*="producto.html"]');
     for (var j = 0; j < homeCards.length; j++) {
       var homeCard = homeCards[j];
       var homeHref = homeCard.getAttribute('href');
