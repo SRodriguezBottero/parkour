@@ -131,10 +131,13 @@
         'stroke-width: 2;' +
         'stroke-linecap: round;' +
         'stroke-linejoin: round;' +
-        'transition: stroke 0.2s, fill 0.2s;' +
+        'transition: stroke 160ms cubic-bezier(0.23, 1, 0.32, 1), fill 160ms cubic-bezier(0.23, 1, 0.32, 1);' +
       '}' +
-      '.parkour-nav-icon:hover svg {' +
+      '.parkour-nav-icon:active svg {' +
         'stroke: #D8A73D;' +
+      '}' +
+      '@media (hover: hover) and (pointer: fine) {' +
+        '.parkour-nav-icon:hover svg { stroke: #D8A73D; }' +
       '}' +
       '.parkour-nav-icon:focus-visible {' +
         'outline: 2px solid #D8A73D;' +
@@ -359,12 +362,13 @@
         'color: #D8A73D;' +
       '}' +
 
+      '.card-slot { position: relative; }' +
       '.parkour-fav-btn {' +
         'position: absolute;' +
         'top: 12px;' +
         'right: 12px;' +
-        'width: 40px;' +
-        'height: 40px;' +
+        'width: 44px;' +
+        'height: 44px;' +
         'background: rgba(18,18,18,0.85);' +
         'border: none;' +
         'border-radius: 50%;' +
@@ -373,7 +377,10 @@
         'align-items: center;' +
         'justify-content: center;' +
         'z-index: 5;' +
-        'transition: transform 0.2s ease;' +
+        'transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);' +
+      '}' +
+      '.parkour-fav-btn:active {' +
+        'transform: scale(0.97);' +
       '}' +
       '.parkour-fav-btn svg {' +
         'width: 22px;' +
@@ -383,8 +390,8 @@
         'stroke-width: 2;' +
         'transition: fill 0.2s, stroke 0.2s;' +
       '}' +
-      '.parkour-fav-btn:hover svg {' +
-        'stroke: #D8A73D;' +
+      '@media (hover: hover) and (pointer: fine) {' +
+        '.parkour-fav-btn:hover svg { stroke: #D8A73D; }' +
       '}' +
       '.parkour-fav-btn.is-active svg {' +
         'fill: #C1442E;' +
@@ -442,7 +449,7 @@
           'border-top: 1px solid #33312c;' +
           'justify-content: center;' +
           'gap: 24px;' +
-          'padding: 12px;' +
+          'padding: 12px 12px calc(12px + env(safe-area-inset-bottom));' +
           'margin: 0;' +
           'z-index: 19;' +
         '}' +
@@ -455,7 +462,7 @@
           'height: 28px;' +
         '}' +
         'body {' +
-          'padding-bottom: 76px;' +
+          'padding-bottom: calc(76px + env(safe-area-inset-bottom));' +
         '}' +
       '}' +
 
@@ -463,6 +470,7 @@
         '.parkour-panel-overlay { transition: none; }' +
         '.parkour-panel { transition: none; }' +
         '.parkour-fav-btn { transition: none; }' +
+        '.parkour-fav-btn:active { transform: none; }' +
         '.parkour-fav-btn svg { transition: none; }' +
         '.parkour-add-bag-btn { transition: none; }' +
       '}';
@@ -835,12 +843,20 @@
     }
   }
 
-  function createFavoriteButton(productId) {
+  function favoriteLabel(isFav, name) {
+    var action = isFav ? 'Quitar de favoritos' : 'Agregar a favoritos';
+    if (!name) return action;
+    return action + ': ' + name;
+  }
+
+  function createFavoriteButton(productId, productName) {
+    var name = productName || '';
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'parkour-fav-btn';
     btn.setAttribute('data-product-id', productId);
-    btn.setAttribute('aria-label', isFavorite(productId) ? 'Quitar de favoritos' : 'Agregar a favoritos');
+    btn.setAttribute('data-product-name', name);
+    btn.setAttribute('aria-label', favoriteLabel(isFavorite(productId), name));
     btn.setAttribute('aria-pressed', isFavorite(productId) ? 'true' : 'false');
     if (isFavorite(productId)) btn.classList.add('is-active');
     
@@ -849,16 +865,7 @@
     btn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      var isNowFavorite = toggleFavorite(productId);
-      btn.classList.toggle('is-active', isNowFavorite);
-      btn.setAttribute('aria-pressed', isNowFavorite ? 'true' : 'false');
-      btn.setAttribute('aria-label', isNowFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos');
-
-      if (!prefersReducedMotion) {
-        btn.style.transform = 'scale(1.2)';
-        setTimeout(function() { btn.style.transform = ''; }, 150);
-      }
-
+      toggleFavorite(productId);
       updateAllFavoriteButtons();
     });
 
@@ -873,8 +880,31 @@
       var isFav = isFavorite(productId);
       btn.classList.toggle('is-active', isFav);
       btn.setAttribute('aria-pressed', isFav ? 'true' : 'false');
-      btn.setAttribute('aria-label', isFav ? 'Quitar de favoritos' : 'Agregar a favoritos');
+      btn.setAttribute('aria-label', favoriteLabel(isFav, btn.getAttribute('data-product-name') || ''));
     }
+  }
+
+  function cardProductName(card) {
+    var nameEl = card.querySelector('.name');
+    if (!nameEl) return '';
+    return nameEl.textContent.replace(/\s+/g, ' ').trim();
+  }
+
+  function placeFavoriteButton(card, productId) {
+    if (card.querySelector('.parkour-fav-btn')) return;
+    var slot = card.parentElement;
+    if (!slot || !slot.classList.contains('card-slot')) {
+      slot = document.createElement('div');
+      slot.className = 'card-slot';
+      card.parentNode.insertBefore(slot, card);
+      slot.appendChild(card);
+    }
+    var children = slot.children;
+    for (var i = 0; i < children.length; i++) {
+      if (children[i].classList && children[i].classList.contains('parkour-fav-btn')) return;
+    }
+    slot.style.position = 'relative';
+    slot.appendChild(createFavoriteButton(productId, cardProductName(card)));
   }
 
   function initProductCards() {
@@ -886,12 +916,7 @@
       if (!match) continue;
       var productId = match[1];
 
-      card.style.position = 'relative';
-      var existing = card.querySelector('.parkour-fav-btn');
-      if (!existing) {
-        var favBtn = createFavoriteButton(productId);
-        card.appendChild(favBtn);
-      }
+      placeFavoriteButton(card, productId);
     }
 
     var homeCards = document.querySelectorAll('.tee-card[href*="producto.html"]');
@@ -902,12 +927,7 @@
       if (!homeMatch) continue;
       var homeProductId = homeMatch[1];
 
-      homeCard.style.position = 'relative';
-      var existingHome = homeCard.querySelector('.parkour-fav-btn');
-      if (!existingHome) {
-        var homeFavBtn = createFavoriteButton(homeProductId);
-        homeCard.appendChild(homeFavBtn);
-      }
+      placeFavoriteButton(homeCard, homeProductId);
     }
   }
 

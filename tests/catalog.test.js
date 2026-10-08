@@ -220,7 +220,7 @@ describe('disenos.html category filter', function () {
     var dom = loadCatalog('', { scripts: ['products.js', 'pedido.js'] });
     var cards = dom.window.document.querySelectorAll('#grid .card');
     assert.ok(cards.length > 0);
-    var btn = cards[0].querySelector('.parkour-fav-btn');
+    var btn = cards[0].parentElement.querySelector('.parkour-fav-btn');
     assert.ok(btn);
     assert.equal(btn.getAttribute('data-product-id'), cards[0].getAttribute('href').split('id=')[1]);
     var productId = btn.getAttribute('data-product-id');
@@ -517,17 +517,17 @@ describe('index.html featured strip', function () {
     var dom = loadHome({ scripts: ['products.js', 'pedido.js'] });
     var tee = dom.window.document.querySelector('.tee-card[href*="producto.html?id="]');
     assert.ok(tee);
-    var teeBtn = tee.querySelector('.parkour-fav-btn');
+    var teeBtn = tee.parentElement.querySelector('.parkour-fav-btn');
     assert.ok(teeBtn);
     assert.equal(teeBtn.getAttribute('data-product-id'), 'crush');
 
     var stripCard = dom.window.document.querySelector('#featured-strip .card');
     assert.ok(stripCard);
-    assert.ok(stripCard.querySelector('.parkour-fav-btn'));
+    assert.ok(stripCard.parentElement.querySelector('.parkour-fav-btn'));
 
     teeBtn.click();
     assert.equal(dom.window.PARKOUR_PEDIDO.isFavorite('crush'), true);
-    assert.equal(stripCard.querySelector('.parkour-fav-btn').getAttribute('aria-pressed'), 'true');
+    assert.equal(stripCard.parentElement.querySelector('.parkour-fav-btn').getAttribute('aria-pressed'), 'true');
     dom.window.close();
   });
 

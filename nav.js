@@ -12,6 +12,9 @@
     var style = document.createElement('style');
     style.id = 'parkour-nav-mobile-styles';
     style.textContent = 
+      'html { -webkit-tap-highlight-color: transparent; }' +
+      'a, button { touch-action: manipulation; }' +
+      'button { -webkit-user-select: none; user-select: none; }' +
       '.nav-hamburger {' +
         'display: none;' +
         'background: transparent;' +
@@ -29,7 +32,10 @@
         'stroke-width: 2;' +
         'stroke-linecap: round;' +
       '}' +
-      '.nav-hamburger:hover svg { stroke: #D8A73D; }' +
+      '.nav-hamburger:active svg { stroke: #D8A73D; }' +
+      '@media (hover: hover) and (pointer: fine) {' +
+        '.nav-hamburger:hover svg { stroke: #D8A73D; }' +
+      '}' +
       '.nav-hamburger:focus-visible {' +
         'outline: 2px solid #D8A73D;' +
         'outline-offset: 3px;' +
@@ -48,11 +54,11 @@
           'background: #121212;' +
           'flex-direction: column;' +
           'align-items: stretch;' +
-          'padding: 100px 32px 48px;' +
+          'padding: calc(100px + env(safe-area-inset-top)) 32px calc(48px + env(safe-area-inset-bottom));' +
           'gap: 0;' +
           'transform: translateX(100%);' +
           'visibility: hidden;' +
-          'transition: transform 0.3s ease;' +
+          'transition: transform 250ms cubic-bezier(0.32, 0.72, 0, 1);' +
           'z-index: 21;' +
           'border-left: 1px solid #33312c;' +
           'box-shadow: -8px 0 24px rgba(0,0,0,0.4);' +
@@ -75,7 +81,7 @@
         'nav .has-submenu > a::after {' +
           'display: block;' +
           'margin-left: auto;' +
-          'transition: transform 0.2s ease;' +
+          'transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);' +
         '}' +
         'nav .has-submenu.is-open > a::after {' +
           'transform: rotate(180deg);' +
@@ -93,7 +99,9 @@
           'padding: 10px 0;' +
           'font-size: 16px;' +
         '}' +
-        'nav .submenu a:hover { background: transparent; }' +
+        '@media (hover: hover) and (pointer: fine) {' +
+          'nav .submenu a:hover { background: transparent; }' +
+        '}' +
         '.nav-overlay {' +
           'position: fixed;' +
           'top: 0;' +
@@ -104,7 +112,7 @@
           'z-index: 20;' +
           'opacity: 0;' +
           'pointer-events: none;' +
-          'transition: opacity 0.3s ease;' +
+          'transition: opacity 200ms cubic-bezier(0.23, 1, 0.32, 1);' +
         '}' +
         '.nav-overlay.is-visible {' +
           'opacity: 1;' +

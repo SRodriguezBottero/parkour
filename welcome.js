@@ -103,11 +103,16 @@
         'font-weight: 700;' +
         'font-size: 15px;' +
         'cursor: pointer;' +
-        'transition: border-color 0.2s, color 0.2s;' +
+        'transition: border-color 160ms cubic-bezier(0.23, 1, 0.32, 1), color 160ms cubic-bezier(0.23, 1, 0.32, 1), transform 160ms cubic-bezier(0.23, 1, 0.32, 1);' +
       '}' +
-      '.parkour-banner-btn:hover {' +
-        'border-color: #D8A73D;' +
-        'color: #D8A73D;' +
+      '.parkour-banner-btn:active {' +
+        'transform: scale(0.97);' +
+      '}' +
+      '@media (hover: hover) and (pointer: fine) {' +
+        '.parkour-banner-btn:hover {' +
+          'border-color: #D8A73D;' +
+          'color: #D8A73D;' +
+        '}' +
       '}' +
       '.parkour-banner-btn:focus-visible {' +
         'outline: 2px solid #D8A73D;' +
@@ -117,10 +122,17 @@
         'background: #a83a26;' +
         'border-color: #a83a26;' +
       '}' +
-      '.parkour-banner-btn-primary:hover {' +
+      '.parkour-banner-btn-primary:active {' +
         'background: #8f311f;' +
         'border-color: #8f311f;' +
         'color: #F3EFE6;' +
+      '}' +
+      '@media (hover: hover) and (pointer: fine) {' +
+        '.parkour-banner-btn-primary:hover {' +
+          'background: #8f311f;' +
+          'border-color: #8f311f;' +
+          'color: #F3EFE6;' +
+        '}' +
       '}' +
       '@media (prefers-reduced-motion: reduce) {' +
         '#parkour-welcome-banner { animation: none !important; }' +
@@ -181,7 +193,7 @@
     style.textContent = 
       '#parkour-sticker {' +
         'position: fixed;' +
-        'bottom: 100px;' +
+        'bottom: calc(24px + env(safe-area-inset-bottom));' +
         'right: 20px;' +
         'background: #D8A73D;' +
         'color: #121212;' +
@@ -192,31 +204,35 @@
         'transform: rotate(3deg);' +
         'box-shadow: 6px 6px 0 rgba(18, 18, 18, 0.3);' +
         'z-index: 9998;' +
-        (prefersReducedMotion ? '' : 'animation: parkour-sticker-pop 0.5s ease 1s backwards;') +
+        (prefersReducedMotion ? '' : 'animation: parkour-sticker-pop 280ms cubic-bezier(0.23, 1, 0.32, 1) 1s both;') +
       '}' +
       '@keyframes parkour-sticker-pop {' +
-        'from { transform: rotate(3deg) scale(0.5); opacity: 0; }' +
+        'from { transform: rotate(3deg) scale(0.96); opacity: 0; }' +
         'to { transform: rotate(3deg) scale(1); opacity: 1; }' +
       '}' +
       '.parkour-sticker-close {' +
         'position: absolute;' +
-        'top: -8px;' +
-        'right: -8px;' +
-        'width: 24px;' +
-        'height: 24px;' +
+        'top: -16px;' +
+        'right: -16px;' +
+        'width: 44px;' +
+        'height: 44px;' +
         'background: #121212;' +
         'color: #F3EFE6;' +
         'border: none;' +
         'border-radius: 50%;' +
-        'font-size: 18px;' +
+        'font-size: 22px;' +
         'line-height: 1;' +
         'cursor: pointer;' +
         'display: flex;' +
         'align-items: center;' +
         'justify-content: center;' +
       '}' +
-      '.parkour-sticker-close:hover {' +
+      '.parkour-sticker-close:active {' +
         'background: #a83a26;' +
+        'transform: scale(0.97);' +
+      '}' +
+      '@media (hover: hover) and (pointer: fine) {' +
+        '.parkour-sticker-close:hover { background: #a83a26; }' +
       '}' +
       '.parkour-sticker-close:focus-visible {' +
         'outline: 2px solid #F3EFE6;' +
@@ -226,10 +242,10 @@
         'margin: 0;' +
         'line-height: 1.4;' +
       '}' +
-      '@media (max-width: 480px) {' +
+      '@media (max-width: 780px) {' +
         '#parkour-sticker {' +
-          'right: 10px;' +
-          'bottom: 80px;' +
+          'right: 16px;' +
+          'bottom: calc(96px + env(safe-area-inset-bottom));' +
           'max-width: 180px;' +
           'font-size: 14px;' +
         '}' +

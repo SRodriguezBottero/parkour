@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#121212">
 <title>Diseños — Parkour</title>
 <meta name="description" content="Catálogo Parkour: remeras en tiradas chicas. Frases, pelis y más.">
 <meta property="og:type" content="website">
@@ -21,6 +22,7 @@
     --mustard:#D8A73D;
     --brick:#C1442E;
     --line:#33312c;
+    --ease-out:cubic-bezier(0.23, 1, 0.32, 1);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -29,18 +31,15 @@
     font-family:'Space Grotesk', sans-serif;
     overflow-x:hidden;
     min-height:100vh;
+    min-height:100dvh;
     display:flex;
     flex-direction:column;
   }
   .display{font-family:'Archivo Black', sans-serif; text-transform:uppercase; line-height:0.9;}
 
-  @keyframes rise{
-    from{opacity:0; transform:translateY(16px);}
-    to{opacity:1; transform:translateY(0);}
-  }
-  @keyframes rise-tilt{
-    from{opacity:0; transform:translateY(20px) rotate(var(--tilt, 0deg));}
-    to{opacity:1; transform:translateY(0) rotate(var(--tilt, 0deg));}
+  @keyframes card-in{
+    from{opacity:0;}
+    to{opacity:1;}
   }
 
   nav{
@@ -54,7 +53,7 @@
   nav .logo img{height:112px; width:auto; display:block; margin:-16px 0;}
   nav > ul{display:flex; gap:36px; list-style:none; align-items:center;}
   nav a{color:var(--bone); text-decoration:none; font-size:17px;}
-  nav a:hover{color:var(--mustard);}
+  nav a:active{color:var(--mustard);}
   nav a.active,
   nav a[aria-current="page"]{color:var(--mustard);}
   nav .has-submenu{position:relative;}
@@ -94,7 +93,6 @@
     font-size:15px;
     white-space:nowrap;
   }
-  nav .submenu a:hover,
   nav .submenu a[aria-current="page"]{
     color:var(--mustard);
     background:#2a2824;
@@ -127,7 +125,14 @@
     flex:1;
     padding:72px 5vw 100px;
   }
-  .page-head{margin-bottom:56px; opacity:0; animation:rise 0.55s ease forwards;}
+  .page-head{
+    margin-bottom:56px;
+    opacity:1;
+    transition:opacity 280ms var(--ease-out), transform 280ms var(--ease-out);
+  }
+  @starting-style{
+    .page-head{opacity:0; transform:translateY(12px);}
+  }
   .page-head h1{
     font-family:'Archivo Black', sans-serif;
     font-size:clamp(44px,7vw,80px);
@@ -156,14 +161,14 @@
     color:var(--bone);
     transform:rotate(-1deg);
   }
-  .empty.visible{display:block; animation:rise 0.35s ease;}
+  .empty.visible{display:block; animation:card-in 280ms var(--ease-out);}
   .empty p{
     font-family:'Permanent Marker', cursive;
     color:var(--mustard);
     font-size:22px;
     margin-bottom:8px;
   }
-  .empty span{color:#c9c5ba; font-size:16px;}
+  .empty span{display:block; color:#c9c5ba; font-size:16px;}
   .btn-secret{
     display:inline-block;
     margin-top:24px;
@@ -176,9 +181,25 @@
     text-decoration:none;
     clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
     transform:rotate(1deg);
-    transition:background 0.2s;
+    transition:background 160ms var(--ease-out), transform 160ms var(--ease-out);
   }
-  .btn-secret:hover{background:#8f311f;}
+  .btn-secret:active{background:#8f311f; transform:rotate(1deg) scale(0.97);}
+  .card-slot{
+    position:relative;
+    --tilt:0deg;
+    transform:rotate(var(--tilt));
+    transition:transform 200ms var(--ease-out);
+    animation:card-in 280ms var(--ease-out) both;
+  }
+  .card-slot:nth-child(1){animation-delay:40ms;}
+  .card-slot:nth-child(2){animation-delay:100ms;}
+  .card-slot:nth-child(3){animation-delay:160ms;}
+  .card-slot:nth-child(4){animation-delay:220ms;}
+  .card-slot:nth-child(5){animation-delay:280ms;}
+  .card-slot:nth-child(4n+1){--tilt:-2deg;}
+  .card-slot:nth-child(4n+2){--tilt:1.5deg;}
+  .card-slot:nth-child(4n+3){--tilt:-1deg;}
+  .card-slot:nth-child(4n){--tilt:2deg;}
   .card{
     background:var(--black);
     color:var(--bone);
@@ -186,28 +207,12 @@
     position:relative;
     text-decoration:none;
     display:block;
-    --tilt:0deg;
-    opacity:0;
-    animation:rise-tilt 0.5s ease forwards;
-    transition:transform 0.28s ease, box-shadow 0.28s ease;
+    height:100%;
+    transition:transform 120ms var(--ease-out);
   }
-  .card:nth-child(1){animation-delay:0.04s;}
-  .card:nth-child(2){animation-delay:0.1s;}
-  .card:nth-child(3){animation-delay:0.16s;}
-  .card:nth-child(4){animation-delay:0.22s;}
-  .card:nth-child(5){animation-delay:0.28s;}
+  .card:active{transform:scale(0.98);}
   .card:hover{color:var(--bone);}
-  .card:hover .name{color:var(--mustard);}
-  .card:nth-child(4n+1){--tilt:-2deg; transform:rotate(-2deg);}
-  .card:nth-child(4n+2){--tilt:1.5deg; transform:rotate(1.5deg);}
-  .card:nth-child(4n+3){--tilt:-1deg; transform:rotate(-1deg);}
-  .card:nth-child(4n){--tilt:2deg; transform:rotate(2deg);}
-  .card:hover{
-    transform:translateY(-10px) rotate(var(--tilt));
-    box-shadow: 10px 14px 0 rgba(216,167,61,0.2);
-  }
   .card.hidden{display:none;}
-  .card.animating{animation:rise-tilt 0.4s ease forwards;}
   .card .art{
     aspect-ratio:1;
     background:#0c0b0a;
@@ -226,15 +231,29 @@
   }
   .card .price{color:var(--mustard); font-size:16px; margin-top:4px;}
 
+  @media (hover: hover) and (pointer: fine){
+    nav a:hover{color:var(--mustard);}
+    nav .submenu a:hover{
+      color:var(--mustard);
+      background:#2a2824;
+    }
+    .btn-secret:hover{background:#8f311f;}
+    .card-slot:hover{transform:translateY(-6px) rotate(var(--tilt));}
+    .card-slot:hover .name{color:var(--mustard);}
+    footer a:hover{color:var(--mustard);}
+  }
+
   @media (prefers-reduced-motion: reduce){
     .page-head,
+    .card-slot,
     .card,
     .empty.visible{
       animation:none !important;
       opacity:1 !important;
       transition:none !important;
     }
-    .card:hover{box-shadow:none; transform:rotate(var(--tilt));}
+    .card-slot:hover{transform:rotate(var(--tilt, 0deg));}
+    .card:active{transform:none;}
   }
 
   footer{
@@ -255,7 +274,7 @@
   }
   footer .links{display:flex; gap:28px; list-style:none;}
   footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
-  footer a:hover{color:var(--mustard);}
+  footer a:active{color:var(--mustard);}
   footer .fine{color:#9a968c; font-size:13px; margin-top:6px;}
   .footer-art{
     max-height:80px;
@@ -339,16 +358,24 @@
   var products = PARKOUR_UTILS.getProductsByCategory(category);
   var secretBtn = document.getElementById('secret-stock');
 
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   var html = '';
 
   for (var i = 0; i < products.length; i++) {
     var p = products[i];
     var imgSrc = PARKOUR_UTILS.encodeImageSrc(p.image);
-    html += '<a class="card" data-category="' + p.categorySlug + '" href="producto.html?id=' + p.id + '">' +
-      '<div class="art"><img src="' + imgSrc + '" alt=""></div>' +
-      '<div class="name">' + p.name + '</div>' +
-      '<div class="price">' + p.price + '</div>' +
-    '</a>';
+    html += '<div class="card-slot"><a class="card" data-category="' + escapeHtml(p.categorySlug) + '" href="producto.html?id=' + p.id + '">' +
+      '<div class="art"><img src="' + imgSrc + '" alt="" onerror="this.style.visibility=\'hidden\'"></div>' +
+      '<div class="name">' + escapeHtml(p.name) + '</div>' +
+      '<div class="price">' + escapeHtml(p.price) + '</div>' +
+    '</a></div>';
   }
 
   grid.innerHTML = html;

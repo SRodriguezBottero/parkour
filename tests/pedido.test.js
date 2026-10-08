@@ -452,8 +452,10 @@ describe('pedido.js favorites and bag', function () {
   it('mounts favorite buttons on catalog cards without following the card link', function () {
     var cards = '<a class="card" href="producto.html?id=crush"><div class="name">Crush</div></a>';
     var ctx = loadPedido({ cards: cards });
-    var btn = ctx.win.document.querySelector('.card .parkour-fav-btn');
+    var btn = ctx.win.document.querySelector('.card-slot > .parkour-fav-btn');
     assert.ok(btn);
+    assert.equal(btn.closest('a'), null);
+    assert.equal(btn.getAttribute('aria-label'), 'Agregar a favoritos: Crush');
     assert.equal(btn.getAttribute('data-product-id'), 'crush');
     assert.equal(btn.getAttribute('aria-pressed'), 'false');
 
@@ -529,7 +531,7 @@ describe('pedido.js favorites and bag', function () {
       bubbled = true;
     });
 
-    card.querySelector('.parkour-fav-btn').click();
+    card.parentElement.querySelector('.parkour-fav-btn').click();
     assert.equal(ctx.pedido.isFavorite('crush'), true);
     assert.equal(bubbled, false);
     ctx.dom.window.close();
@@ -647,10 +649,10 @@ describe('pedido.js favorites and bag', function () {
         win.localStorage.setItem('parkour_favoritos', JSON.stringify(['crush']));
       }
     });
-    var btn = ctx.win.document.querySelector('.card .parkour-fav-btn');
+    var btn = ctx.win.document.querySelector('.card-slot > .parkour-fav-btn');
     assert.ok(btn);
     assert.equal(btn.getAttribute('aria-pressed'), 'true');
-    assert.equal(btn.getAttribute('aria-label'), 'Quitar de favoritos');
+    assert.equal(btn.getAttribute('aria-label'), 'Quitar de favoritos: Crush');
     assert.ok(btn.classList.contains('is-active'));
     ctx.dom.window.close();
   });
@@ -808,7 +810,7 @@ describe('pedido.js favorites and bag', function () {
   it('mounts a favorite button when the card href has extra params after id', function () {
     var cards = '<a class="card" href="producto.html?id=crush&src=home"><div class="name">Crush</div></a>';
     var ctx = loadPedido({ cards: cards });
-    var btn = ctx.win.document.querySelector('.card .parkour-fav-btn');
+    var btn = ctx.win.document.querySelector('.card-slot > .parkour-fav-btn');
     assert.ok(btn);
     assert.equal(btn.getAttribute('data-product-id'), 'crush');
     btn.click();
@@ -964,7 +966,7 @@ describe('pedido.js favorites and bag', function () {
   it('mounts a favorite button when id is not the first query param on the card', function () {
     var cards = '<a class="card" href="producto.html?src=home&amp;id=crush"><div class="name">Crush</div></a>';
     var ctx = loadPedido({ cards: cards });
-    var btn = ctx.win.document.querySelector('.card .parkour-fav-btn');
+    var btn = ctx.win.document.querySelector('.card-slot > .parkour-fav-btn');
     assert.ok(btn);
     assert.equal(btn.getAttribute('data-product-id'), 'crush');
     btn.click();
@@ -992,7 +994,7 @@ describe('pedido.js favorites and bag', function () {
   it('un-highlights catalog hearts when the favorite is removed from the panel', function () {
     var cards = '<a class="card" href="producto.html?id=crush"><div class="name">Crush</div></a>';
     var ctx = loadPedido({ cards: cards });
-    var heart = ctx.win.document.querySelector('.card .parkour-fav-btn');
+    var heart = ctx.win.document.querySelector('.card-slot > .parkour-fav-btn');
     heart.click();
     assert.equal(heart.getAttribute('aria-pressed'), 'true');
 
@@ -1001,7 +1003,7 @@ describe('pedido.js favorites and bag', function () {
 
     assert.equal(ctx.pedido.isFavorite('crush'), false);
     assert.equal(heart.getAttribute('aria-pressed'), 'false');
-    assert.equal(heart.getAttribute('aria-label'), 'Agregar a favoritos');
+    assert.equal(heart.getAttribute('aria-label'), 'Agregar a favoritos: Crush');
     assert.equal(heart.classList.contains('is-active'), false);
     ctx.dom.window.close();
   });
@@ -1320,7 +1322,7 @@ describe('pedido.js favorites and bag', function () {
   it('mounts a tee-card favorite button when id is not the first query param', function () {
     var cards = '<a class="tee-card" href="producto.html?src=home&amp;id=crush"><div class="name">Crush</div></a>';
     var ctx = loadPedido({ cards: cards });
-    var btn = ctx.win.document.querySelector('.tee-card .parkour-fav-btn');
+    var btn = ctx.win.document.querySelector('.card-slot > .parkour-fav-btn');
     assert.ok(btn);
     assert.equal(btn.getAttribute('data-product-id'), 'crush');
     btn.click();

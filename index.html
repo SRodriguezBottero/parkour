@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#121212">
 <title>Parkour</title>
 <meta name="description" content="Remeras que chocan. Diseños propios, humor random y cero pretensión. Hechas en Uruguay.">
 <meta property="og:type" content="website">
@@ -22,6 +23,7 @@
     --mustard:#D8A73D;
     --brick:#C1442E;
     --line:#33312c;
+    --ease-out:cubic-bezier(0.23, 1, 0.32, 1);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -37,15 +39,10 @@
     from{opacity:0; transform:translateY(18px);}
     to{opacity:1; transform:translateY(0);}
   }
-  @keyframes rise-tilt{
-    from{opacity:0; transform:translateY(22px) rotate(var(--tilt, 0deg));}
-    to{opacity:1; transform:translateY(0) rotate(var(--tilt, 0deg));}
+  @keyframes card-in{
+    from{opacity:0;}
+    to{opacity:1;}
   }
-  @keyframes settle{
-    from{opacity:0; transform:translateY(28px) rotate(8deg);}
-    to{opacity:1; transform:translateY(0) rotate(4deg);}
-  }
-
   /* HERO */
 
   nav{
@@ -58,7 +55,7 @@
   nav .logo img{height:112px; width:auto; display:block; margin:-16px 0;}
   nav > ul{display:flex; gap:36px; list-style:none; align-items:center;}
   nav a{color:var(--bone); text-decoration:none; font-size:17px;}
-  nav a:hover{color:var(--mustard);}
+  nav a:active{color:var(--mustard);}
   nav a[aria-current="page"]{color:var(--mustard);}
   nav .has-submenu{position:relative;}
   nav .has-submenu > a{
@@ -97,7 +94,6 @@
     font-size:15px;
     white-space:nowrap;
   }
-  nav .submenu a:hover,
   nav .submenu a[aria-current="page"]{
     color:var(--mustard);
     background:#2a2824;
@@ -180,33 +176,34 @@
     text-decoration:none;
     cursor:pointer;
     clip-path:polygon(0 0, 94% 0, 100% 100%, 6% 100%);
+    transition:background 160ms var(--ease-out), transform 160ms var(--ease-out);
   }
-  .btn:hover{background:#8f311f;}
+  .btn:active{background:#8f311f; transform:scale(0.97);}
   .cta-row .marker{color:var(--mustard); font-size:24px; transform:rotate(-4deg);}
 
   .hero-visual{
     position:relative;
     display:flex; justify-content:center; align-items:center;
   }
-  .tee-card{
+  .hero-visual > .card-slot{
+    position:relative;
     width:min(380px, 86%);
+    transform:rotate(4deg);
+    transition:transform 200ms var(--ease-out);
+    animation:card-in 280ms var(--ease-out) 80ms both;
+  }
+  .tee-card{
+    width:100%;
     background:#0c0b0a;
     border:1px solid var(--line);
     padding:12px;
-    transform:rotate(4deg);
     box-shadow: 18px 18px 0 rgba(216,167,61,0.15);
     text-decoration:none;
     color:inherit;
     display:block;
-    opacity:0;
-    animation:settle 0.85s ease 0.35s forwards;
-    transition:transform 0.3s ease, box-shadow 0.3s ease;
+    transition:transform 120ms var(--ease-out);
   }
-  .tee-card:hover{
-    color:inherit;
-    transform:rotate(2deg) translateY(-8px);
-    box-shadow: 22px 26px 0 rgba(216,167,61,0.22);
-  }
+  .tee-card:active{transform:scale(0.98);}
   .tee-card img{width:100%; height:auto; display:block;}
   .tag{
     position:absolute;
@@ -244,36 +241,34 @@
     overflow-x:auto;
     padding-bottom:20px;
   }
-  .card{
+  .strip > .card-slot{
+    position:relative;
     flex:0 0 300px;
+    --tilt:0deg;
+    transform:rotate(var(--tilt));
+    transition:transform 200ms var(--ease-out);
+    animation:card-in 280ms var(--ease-out) both;
+  }
+  .strip > .card-slot:nth-child(1){animation-delay:40ms;}
+  .strip > .card-slot:nth-child(2){animation-delay:100ms;}
+  .strip > .card-slot:nth-child(3){animation-delay:160ms;}
+  .strip > .card-slot:nth-child(4){animation-delay:220ms;}
+  .strip > .card-slot:nth-child(5){animation-delay:280ms;}
+  .strip > .card-slot:nth-child(odd){--tilt:-3deg;}
+  .strip > .card-slot:nth-child(even){--tilt:2deg;}
+  .card{
+    width:100%;
     background:var(--black);
     color:var(--bone);
     padding:20px 20px 26px;
     position:relative;
     text-decoration:none;
     display:block;
-    --tilt:0deg;
-    opacity:0;
-    animation:rise-tilt 0.55s ease forwards;
-    transition:transform 0.28s ease, box-shadow 0.28s ease;
+    height:100%;
+    transition:transform 120ms var(--ease-out);
   }
-  .card:nth-child(1){animation-delay:0.05s;}
-  .card:nth-child(2){animation-delay:0.12s;}
-  .card:nth-child(3){animation-delay:0.19s;}
-  .card:nth-child(4){animation-delay:0.26s;}
-  .card:nth-child(5){animation-delay:0.33s;}
+  .card:active{transform:scale(0.98);}
   .card:hover{color:var(--bone);}
-  .card:hover .name{color:var(--mustard);}
-  .card:nth-child(odd){--tilt:-3deg; transform:rotate(-3deg);}
-  .card:nth-child(even){--tilt:2deg; transform:rotate(2deg);}
-  .card:nth-child(odd):hover{
-    transform:translateY(-10px) rotate(-2deg);
-    box-shadow: 10px 14px 0 rgba(216,167,61,0.2);
-  }
-  .card:nth-child(even):hover{
-    transform:translateY(-10px) rotate(1deg);
-    box-shadow: 10px 14px 0 rgba(216,167,61,0.2);
-  }
   .card .art{
     aspect-ratio:1;
     background:#0c0b0a;
@@ -359,7 +354,7 @@
   }
   footer .links{display:flex; gap:28px; list-style:none;}
   footer a{color:#c9c5ba; text-decoration:none; font-size:16px;}
-  footer a:hover{color:var(--mustard);}
+  footer a:active{color:var(--mustard);}
   footer .fine{color:#9a968c; font-size:13px; margin-top:6px;}
   .footer-art{
     max-height:80px;
@@ -377,28 +372,37 @@
     .about .visual{min-height:280px;}
   }
 
+  @media (hover: hover) and (pointer: fine){
+    nav a:hover{color:var(--mustard);}
+    nav .submenu a:hover{color:var(--mustard); background:#2a2824;}
+    .btn:hover{background:#8f311f;}
+    .hero-visual > .card-slot:hover{transform:rotate(4deg) translateY(-6px);}
+    .strip > .card-slot:hover{transform:translateY(-6px) rotate(var(--tilt));}
+    .strip > .card-slot:hover .name{color:var(--mustard);}
+    footer a:hover{color:var(--mustard);}
+  }
+
   @media (prefers-reduced-motion: reduce){
     .hero-copy h1 span,
     .hero-copy p,
     .cta-row,
+    .hero-visual > .card-slot,
+    .strip > .card-slot,
     .tee-card,
     .card{
       animation:none !important;
       opacity:1 !important;
       transition:none !important;
     }
-    .tee-card{transform:rotate(4deg);}
-    .card:nth-child(odd){transform:rotate(-3deg);}
-    .card:nth-child(even){transform:rotate(2deg);}
-    .tee-card:hover,
-    .card:nth-child(odd):hover,
-    .card:nth-child(even):hover{
-      transform:none;
-      box-shadow:none;
-    }
-    .tee-card:hover{transform:rotate(4deg); box-shadow: 18px 18px 0 rgba(216,167,61,0.15);}
-    .card:nth-child(odd):hover{transform:rotate(-3deg);}
-    .card:nth-child(even):hover{transform:rotate(2deg);}
+    .hero-visual > .card-slot,
+    .hero-visual > .card-slot:hover{transform:rotate(4deg);}
+    .strip > .card-slot:nth-child(odd),
+    .strip > .card-slot:nth-child(odd):hover{transform:rotate(-3deg);}
+    .strip > .card-slot:nth-child(even),
+    .strip > .card-slot:nth-child(even):hover{transform:rotate(2deg);}
+    .tee-card:active,
+    .card:active,
+    .btn:active{transform:none;}
   }
 </style>
 </head>
@@ -443,10 +447,12 @@
     </div>
   </div>
   <div class="hero-visual">
-    <a class="tee-card" href="producto.html?id=crush">
-      <div class="tag">nueva</div>
-      <img src="i_have_a_crush_on_you.png" alt="I have a crush on you">
-    </a>
+    <div class="card-slot">
+      <a class="tee-card" href="producto.html?id=crush">
+        <div class="tag">nueva</div>
+        <img src="i_have_a_crush_on_you.png" alt="I have a crush on you">
+      </a>
+    </div>
   </div>
 </section>
 
@@ -491,16 +497,24 @@
 (function() {
   var strip = document.getElementById('featured-strip');
   var featured = PARKOUR_UTILS.getFeaturedProducts();
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   var html = '';
 
   for (var i = 0; i < featured.length; i++) {
     var p = featured[i];
     var imgSrc = PARKOUR_UTILS.encodeImageSrc(p.image);
-    html += '<a class="card" href="producto.html?id=' + p.id + '">' +
-      '<div class="art"><img src="' + imgSrc + '" alt=""></div>' +
-      '<div class="name">' + p.name + '</div>' +
-      '<div class="price">' + p.price + '</div>' +
-    '</a>';
+    html += '<div class="card-slot"><a class="card" href="producto.html?id=' + p.id + '">' +
+      '<div class="art"><img src="' + imgSrc + '" alt="" onerror="this.style.visibility=\'hidden\'"></div>' +
+      '<div class="name">' + escapeHtml(p.name) + '</div>' +
+      '<div class="price">' + escapeHtml(p.price) + '</div>' +
+    '</a></div>';
   }
 
   strip.innerHTML = html;
