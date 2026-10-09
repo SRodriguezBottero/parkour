@@ -3,12 +3,12 @@
 
   var CATEGORIES = {
     todos: { slug: 'todos', label: 'Lo último' },
-    'big-lebowski': { slug: 'big-lebowski', label: 'Big lebowski' },
+    feminismo: { slug: 'feminismo', label: 'Feminismo' },
     frases: { slug: 'frases', label: 'Frases' },
-    lotr: { slug: 'lotr', label: 'LOTR' },
-    'pelis-random': { slug: 'pelis-random', label: 'Pelis random' },
-    seinfeld: { slug: 'seinfeld', label: 'Seinfeld' },
-    succession: { slug: 'succession', label: 'Succession' }
+    humor: { slug: 'humor', label: 'Humor (la bizzarrity)' },
+    pelis: { slug: 'pelis', label: 'Pelis' },
+    series: { slug: 'series', label: 'Series' },
+    literatura: { slug: 'literatura', label: 'Literatura' }
   };
 
   var PRODUCTS = [
@@ -26,8 +26,8 @@
       id: 'soy-bonito',
       name: 'Soy bonito no perfecto',
       price: '$890',
-      categorySlug: 'pelis-random',
-      categoryLabel: 'Pelis random',
+      categorySlug: 'frases',
+      categoryLabel: 'Frases',
       image: 'soy bonito no Perfecto.png',
       desc: 'Autoestima con humor. Para quienes saben que bonito no es lo mismo que perfecto.',
       featured: true

@@ -65,7 +65,7 @@ describe('disenos.html category filter', function () {
   });
 
   it('shows the empty state and secret stock button only for empty non-todos categories', function () {
-    var emptyCat = loadCatalog('?cat=lotr');
+    var emptyCat = loadCatalog('?cat=literatura');
     var empty = emptyCat.window.document.getElementById('empty');
     var secret = emptyCat.window.document.getElementById('secret-stock');
     var grid = emptyCat.window.document.getElementById('grid');
@@ -107,17 +107,21 @@ describe('disenos.html category filter', function () {
     dom.window.close();
   });
 
-  it('filters pelis-random and keeps other categories out of the grid', function () {
-    var dom = loadCatalog('?cat=pelis-random');
-    var cards = dom.window.document.querySelectorAll('#grid .card');
-    assert.ok(cards.length > 0);
-    Array.prototype.forEach.call(cards, function (card) {
-      assert.equal(card.getAttribute('data-category'), 'pelis-random');
-      assert.match(card.getAttribute('href'), /^producto\.html\?id=/);
+  it('lists soy-bonito under frases and leaves pelis empty', function () {
+    var frases = loadCatalog('?cat=frases');
+    var soy = Array.prototype.find.call(frases.window.document.querySelectorAll('#grid .card'), function (card) {
+      return card.getAttribute('href') === 'producto.html?id=soy-bonito';
     });
-    assert.equal(dom.window.document.getElementById('page-title').textContent, 'Pelis random');
-    assert.equal(dom.window.document.title, 'Pelis random — Parkour');
-    dom.window.close();
+    assert.ok(soy);
+    assert.equal(soy.getAttribute('data-category'), 'frases');
+    frases.window.close();
+
+    var pelis = loadCatalog('?cat=pelis');
+    assert.equal(pelis.window.document.querySelectorAll('#grid .card').length, 0);
+    assert.equal(pelis.window.document.getElementById('page-title').textContent, 'Pelis');
+    assert.equal(pelis.window.document.title, 'Pelis — Parkour');
+    assert.equal(pelis.window.document.getElementById('secret-stock').style.display, 'inline-block');
+    pelis.window.close();
   });
 
   it('encodes catalog image src for filenames with spaces', function () {
@@ -153,18 +157,14 @@ describe('disenos.html category filter', function () {
     dom.window.close();
   });
 
-  it('still filters when the category hyphen is percent-encoded', function () {
-    var dom = loadCatalog('?cat=pelis%2Drandom');
-    var cards = dom.window.document.querySelectorAll('#grid .card');
-    assert.ok(cards.length > 0);
-    Array.prototype.forEach.call(cards, function (card) {
-      assert.equal(card.getAttribute('data-category'), 'pelis-random');
-    });
-    assert.equal(dom.window.document.getElementById('page-title').textContent, 'Pelis random');
-    assert.equal(dom.window.document.title, 'Pelis random — Parkour');
+  it('still selects pelis when a letter in the category is percent-encoded', function () {
+    var dom = loadCatalog('?cat=peli%73');
+    assert.equal(dom.window.document.querySelectorAll('#grid .card').length, 0);
+    assert.equal(dom.window.document.getElementById('page-title').textContent, 'Pelis');
+    assert.equal(dom.window.document.title, 'Pelis — Parkour');
     var current = dom.window.document.querySelector('#submenu-disenos a[aria-current="page"]');
-    assert.equal(current.getAttribute('data-cat'), 'pelis-random');
-    assert.equal(dom.window.document.getElementById('secret-stock').style.display, 'none');
+    assert.equal(current.getAttribute('data-cat'), 'pelis');
+    assert.equal(dom.window.document.getElementById('secret-stock').style.display, 'inline-block');
     dom.window.close();
   });
 
@@ -196,9 +196,9 @@ describe('disenos.html category filter', function () {
   });
 
   it('sets the document title for an empty known category', function () {
-    var dom = loadCatalog('?cat=lotr');
-    assert.equal(dom.window.document.getElementById('page-title').textContent, 'LOTR');
-    assert.equal(dom.window.document.title, 'LOTR — Parkour');
+    var dom = loadCatalog('?cat=literatura');
+    assert.equal(dom.window.document.getElementById('page-title').textContent, 'Literatura');
+    assert.equal(dom.window.document.title, 'Literatura — Parkour');
     dom.window.close();
   });
 
@@ -255,15 +255,15 @@ describe('disenos.html category filter', function () {
     dom.window.close();
   });
 
-  it('shows the empty state for hyphenated empty categories like big-lebowski', function () {
-    var dom = loadCatalog('?cat=big-lebowski');
+  it('shows the empty state for an empty known category like feminismo', function () {
+    var dom = loadCatalog('?cat=feminismo');
     assert.equal(dom.window.document.querySelectorAll('#grid .card').length, 0);
     assert.ok(dom.window.document.getElementById('empty').classList.contains('visible'));
     assert.equal(dom.window.document.getElementById('secret-stock').style.display, 'inline-block');
-    assert.equal(dom.window.document.getElementById('page-title').textContent, 'Big lebowski');
-    assert.equal(dom.window.document.title, 'Big lebowski — Parkour');
+    assert.equal(dom.window.document.getElementById('page-title').textContent, 'Feminismo');
+    assert.equal(dom.window.document.title, 'Feminismo — Parkour');
     var current = dom.window.document.querySelector('#submenu-disenos a[aria-current="page"]');
-    assert.equal(current.getAttribute('data-cat'), 'big-lebowski');
+    assert.equal(current.getAttribute('data-cat'), 'feminismo');
     dom.window.close();
   });
 
@@ -284,7 +284,7 @@ describe('disenos.html category filter', function () {
   });
 
   it('uses the first cat when the query string repeats the param', function () {
-    var dom = loadCatalog('?cat=frases&cat=lotr');
+    var dom = loadCatalog('?cat=frases&cat=literatura');
     var cards = dom.window.document.querySelectorAll('#grid .card');
     assert.ok(cards.length > 0);
     Array.prototype.forEach.call(cards, function (card) {
@@ -873,7 +873,7 @@ describe('producto.html ficha', function () {
   });
 
   it('still loads a known product when cat sits next to id', function () {
-    var dom = loadProduct('?id=crush&cat=lotr');
+    var dom = loadProduct('?id=crush&cat=literatura');
     var doc = dom.window.document;
     assert.equal(doc.getElementById('p-name').textContent, 'I have a crush on you');
     assert.equal(doc.getElementById('p-cat').textContent, 'Frases');

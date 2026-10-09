@@ -31,14 +31,14 @@ describe('products.js catalog utils', function () {
     var ctx = loadUtils();
     var all = ctx.utils.getProductsByCategory('todos');
     var frases = ctx.utils.getProductsByCategory('frases');
-    var lotr = ctx.utils.getProductsByCategory('lotr');
+    var literatura = ctx.utils.getProductsByCategory('literatura');
 
     assert.equal(all.length, ctx.products.length);
     assert.ok(frases.length > 0);
     frases.forEach(function (p) {
       assert.equal(p.categorySlug, 'frases');
     });
-    assert.equal(lotr.length, 0);
+    assert.equal(literatura.length, 0);
     ctx.dom.window.close();
   });
 
