@@ -64,9 +64,13 @@
     }
   ];
 
-  var productsById = {};
+  var productsById = Object.create(null);
   for (var i = 0; i < PRODUCTS.length; i++) {
     productsById[PRODUCTS[i].id] = PRODUCTS[i];
+  }
+
+  function own(map, key) {
+    return key != null && Object.prototype.hasOwnProperty.call(map, key);
   }
 
   window.PARKOUR_PRODUCTS = PRODUCTS;
@@ -75,7 +79,7 @@
 
   window.PARKOUR_UTILS = {
     getProductById: function(id) {
-      return productsById[id] || null;
+      return own(productsById, id) ? productsById[id] : null;
     },
     getFeaturedProducts: function() {
       return PRODUCTS.filter(function(p) { return p.featured; });
@@ -85,7 +89,7 @@
       return PRODUCTS.filter(function(p) { return p.categorySlug === slug; });
     },
     getCategoryLabel: function(slug) {
-      return CATEGORIES[slug] ? CATEGORIES[slug].label : 'Lo último';
+      return own(CATEGORIES, slug) ? CATEGORIES[slug].label : 'Lo último';
     },
     encodeImageSrc: function(filename) {
       return encodeURI(filename).replace(/#/g, '%23');

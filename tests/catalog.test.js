@@ -843,6 +843,28 @@ describe('producto.html ficha', function () {
     dom.window.close();
   });
 
+  it('shows the missing ficha for Object.prototype keys instead of a fake product', function () {
+    ['constructor', 'toString', '__proto__'].forEach(function (id) {
+      var dom = loadProduct('?id=' + encodeURIComponent(id));
+      var doc = dom.window.document;
+      assert.ok(doc.getElementById('product').classList.contains('hidden'), id);
+      assert.ok(doc.getElementById('missing').classList.contains('visible'), id);
+      assert.equal(doc.title, 'No encontrado — Parkour', id);
+      assert.equal(doc.getElementById('p-name').textContent, '', id);
+      assert.equal(
+        doc.querySelector('meta[property="og:title"]').getAttribute('content'),
+        'Producto — Parkour',
+        id
+      );
+
+      doc.getElementById('add-to-bag-btn').click();
+      doc.getElementById('product-fav-btn').click();
+      assert.equal(dom.window.PARKOUR_PEDIDO.getBag().length, 0, id);
+      assert.equal(dom.window.PARKOUR_PEDIDO.getFavorites().length, 0, id);
+      dom.window.close();
+    });
+  });
+
   it('wires talle S into the Instagram CTA and the bag', function () {
     var dom = loadProduct('?id=crush');
     var doc = dom.window.document;

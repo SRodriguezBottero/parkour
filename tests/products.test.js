@@ -27,6 +27,17 @@ describe('products.js catalog utils', function () {
     ctx.dom.window.close();
   });
 
+  it('does not treat Object.prototype keys as catalog products or categories', function () {
+    var ctx = loadUtils();
+    ['constructor', 'toString', 'valueOf', 'hasOwnProperty', '__proto__'].forEach(function (key) {
+      assert.equal(ctx.utils.getProductById(key), null, key + ' must not resolve as a product');
+      assert.equal(ctx.dom.window.PARKOUR_PRODUCTS_BY_ID[key], undefined, key + ' leaked onto the id index');
+      assert.equal(ctx.utils.getCategoryLabel(key), 'Lo último', key + ' must not resolve as a category');
+      assert.equal(ctx.utils.getProductsByCategory(key).length, 0, key + ' must not match a category');
+    });
+    ctx.dom.window.close();
+  });
+
   it('filters by category and treats todos as the full catalog', function () {
     var ctx = loadUtils();
     var all = ctx.utils.getProductsByCategory('todos');
